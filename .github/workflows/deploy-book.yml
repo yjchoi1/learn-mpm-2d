@@ -24,11 +24,11 @@ jobs:
 
       - name: Build the book
         run: |
-          jupyter-book build ./book/
+          jupyter-book build ./book/ --path-output ./docs
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./book/_build/html
-          publish_branch: gh-pages
+          publish_branch: main
