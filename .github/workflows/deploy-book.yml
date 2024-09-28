@@ -1,35 +1,33 @@
-name: deploy-book
+name: Deploy Jupyter Book to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this if your default branch is different
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Check out the repository
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.9'  # You can specify any version you prefer
 
       - name: Install dependencies
         run: |
-          pip install -r book/requirements.txt
+          pip install -U pip
           pip install jupyter-book
 
       - name: Build the book
         run: |
-          cd book  # Navigate to your book directory
-          jupyter-book build .
+          jupyter-book build ./book/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_build/html  # The directory where your HTML files are located
+          publish_dir: ./book/_build/html
