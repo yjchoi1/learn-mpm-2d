@@ -3,7 +3,7 @@
 
 This repository provides hands-on practice for simple 2D material point method (MPM) code using Python jupyter notebook.
 
-![Simulation_configuration](book/figs/sim_config.png)
+<img src="book/figs/sim_config.png" alt="sim config" style="width: 70%;"/>
 
 ### Prerequisite
 * This practice uses numpy library in python. 
