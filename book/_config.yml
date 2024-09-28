@@ -10,10 +10,9 @@ logo: logo.png
 execute:
   execute_notebooks: "off"
 
-# Define the name of the latex output file for PDF builds
-latex:
-  latex_documents:
-    targetname: book.tex
+# Remove or adjust the latex section if necessary
+# latex:
+#   # Custom LaTeX configurations can be added here
 
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
@@ -32,5 +31,6 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  baseurl: "/learn-mpm-2d"
   use_issues_button: true
   use_repository_button: true
