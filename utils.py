@@ -1,5 +1,37 @@
 import numpy as np
 
+
+def generate_rectangular_particles(origin, length, height, spacing):
+    """
+    Generate a numpy array that discretizes a rectangular shaped mass into equally spaced material points.
+    
+    Parameters:
+    origin (tuple): (x, y) coordinates of the bottom left corner of the rectangle
+    length (float): Length of the rectangle
+    width (float): Width of the rectangle
+    spacing (float): Distance between adjacent particles
+    
+    Returns:
+    numpy.ndarray: Array of shape (n, 2) containing the coordinates of material points
+    """
+    
+    # Calculate the number of points along each dimension
+    nx = int(np.ceil(length / spacing)) + 1
+    ny = int(np.ceil(height / spacing)) + 1
+    
+    # Generate equally spaced points along x and y axes
+    x = np.linspace(origin[0], origin[0] + length, nx)
+    y = np.linspace(origin[1], origin[1] + height, ny)
+    
+    # Create a mesh grid
+    xx, yy = np.meshgrid(x, y)
+    
+    # Reshape the meshgrid into a 2D array of points
+    points = np.column_stack((xx.ravel(), yy.ravel()))
+    
+    return points
+
+
 # Function to generate particles within a circle
 def generate_circle_particles(center, radius, spacing):
     # Determine the grid origin, so the grid is consistent regardless of the center

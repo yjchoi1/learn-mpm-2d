@@ -2,7 +2,14 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: root
+root: main_page
 chapters:
 - file: mpm-background
-- file: mpm2d-elastic-ball
+  sections:
+    - file: introduction
+    - file: deformation
+    - file: strain_measure
+- file: practice
+  sections:
+    - file: mpm2d-elastic-ball
+    - file: mpm2d-column-collapse

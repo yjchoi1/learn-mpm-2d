@@ -9,6 +9,32 @@ from pyevtk.hl import pointsToVTK
 import os
 
 
+def plot_mesh_and_particles(nodes, elements, particles):
+    fig, ax = plt.subplots()
+
+    # Plot the mesh
+    for element in elements:
+        # Get the coordinates of the element's nodes
+        quad_coords = nodes[element]
+        # Repeat the first point to close the quad
+        quad_coords = np.vstack([quad_coords, quad_coords[0]])
+        ax.plot(quad_coords[:, 0], quad_coords[:, 1], 'b-', linewidth=1.5)  # Blue lines for the mesh
+
+    # Plot the particles
+    ax.scatter(particles[:, 0], particles[:, 1], color='red', marker='o', label='Particles')
+
+    # Set labels and title
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_title('Mesh and Particles Visualization')
+    ax.legend()
+
+    # Equal aspect ratio
+    ax.set_aspect('equal', 'box')
+
+    plt.show()
+
+
 def save_vtk(istep, result, save_dir):
     """_summary_
 
