@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>MPM background &#8212; Learn MPM 2D</title>
+    <title>Stress and strain &#8212; Learn MPM 2D</title>
   
   
   
@@ -62,12 +62,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'mpm-background';</script>
-    <link rel="canonical" href="/learn-mpm-2d/mpm-background.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'strain_measure';</script>
+    <link rel="canonical" href="/learn-mpm-2d/strain_measure.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview of Material Point Method" href="introduction.html" />
-    <link rel="prev" title="Learn MPM 2D with Python" href="main_page.html" />
+    <link rel="next" title="Practice" href="practice.html" />
+    <link rel="prev" title="Description of deformation" href="deformation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -172,10 +172,10 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Stress and strain</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="practice.html">Practice</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -259,7 +259,7 @@
       
       
       
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmpm-background.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fstrain_measure.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -289,7 +289,7 @@
       
       
       
-      <li><a href="_sources/mpm-background.md" target="_blank"
+      <li><a href="_sources/strain_measure.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -365,7 +365,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>MPM background</h1>
+    <h1>Stress and strain</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -375,7 +375,18 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strain-measures">Strain measures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deformation-gradient-tensor">Deformation gradient tensor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-gradient-tensor">Velocity gradient tensor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-integration-of-deformation-gradient">Numerical integration of deformation gradient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rate-of-deformation-tensor-strain-rate-tensor">Rate of deformation tensor (strain rate tensor)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Stress and Strain</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strain-increment">Strain increment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stress-increment">Stress increment</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -387,18 +398,85 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="mpm-background">
-<h1>MPM background<a class="headerlink" href="#mpm-background" title="Link to this heading">#</a></h1>
-<p>This part introduces brief background on MPM.</p>
-<section id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Nguyen, V. P., de Vaucorbeil, A., &amp; Bordas, S. (2023). The Material Point Method: Theory, Implementations, and Applications. Springer. <a class="reference external" href="https://doi.org/10.1007/978-3-031-24070-6">https://doi.org/10.1007/978-3-031-24070-6</a></p></li>
-<li><p><a class="reference external" href="https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body">https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body</a></p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="stress-and-strain">
+<h1>Stress and strain<a class="headerlink" href="#stress-and-strain" title="Link to this heading">#</a></h1>
+<section id="strain-measures">
+<h2>Strain measures<a class="headerlink" href="#strain-measures" title="Link to this heading">#</a></h2>
+<section id="deformation-gradient-tensor">
+<h3>Deformation gradient tensor<a class="headerlink" href="#deformation-gradient-tensor" title="Link to this heading">#</a></h3>
+<p>The deformation gradient tensor, <span class="math notranslate nohighlight">\(\mathbf{F}\)</span>, is a crucial concept in finite deformation continuum mechanics, as it forms the basis for deriving all measures of deformation. It acts as a linear transformation operator that maps an infinitesimal line element, <span class="math notranslate nohighlight">\(d\mathbf{X}\)</span>, from the reference configuration to the corresponding infinitesimal line element, <span class="math notranslate nohighlight">\(d\mathbf{x}\)</span>, in the deformed configuration. Mathematically, it is expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{F} := \frac{\partial \boldsymbol{\varphi}}{\partial \mathbf{X}} = \frac{\partial \mathbf{x}}{\partial \mathbf{X}}, \quad \text{or in component form,} \quad F_{ij} = \frac{\partial x_i}{\partial X_j}.
+\]</div>
 </section>
-<div class="toctree-wrapper compound">
-</div>
+<section id="velocity-gradient-tensor">
+<h3>Velocity gradient tensor<a class="headerlink" href="#velocity-gradient-tensor" title="Link to this heading">#</a></h3>
+<p>The velocity gradient tensor, <span class="math notranslate nohighlight">\(\mathbf{L}\)</span>, quantifies the spatial rate of change of the velocity field, <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>, within the material. It captures the local rate of stretching, shearing, and rotation. <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> is defined as the gradient of the velocity vector, and its components are given by:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{L} = \dot{\mathbf{F}}\mathbf{F}^{-1}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\bf{L}=\nabla v =\left[
+\begin{matrix}
+\frac{\partial v_x}{\partial x} &amp; \frac{\partial v_x}{\partial y} &amp; \frac{\partial v_x}{\partial z} \\\\
+\frac{\partial v_y}{\partial x} &amp; \frac{\partial v_y}{\partial y} &amp; \frac{\partial v_y}{\partial z} \\\\
+\frac{\partial v_z}{\partial x} &amp; \frac{\partial v_z}{\partial y} &amp; \frac{\partial v_z}{\partial z}
+\end{matrix}
+\right]
+\end{split}\]</div>
+</section>
+<section id="numerical-integration-of-deformation-gradient">
+<h3>Numerical integration of deformation gradient<a class="headerlink" href="#numerical-integration-of-deformation-gradient" title="Link to this heading">#</a></h3>
+<p>To numerically compute <span class="math notranslate nohighlight">\( \mathbf{F} \)</span> over a discrete time step <span class="math notranslate nohighlight">\( \Delta t \)</span>, we use the forward Euler approximation for <span class="math notranslate nohighlight">\( \dot{\mathbf{F}} \)</span>:
+$<span class="math notranslate nohighlight">\(
+\mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t + \dot{\mathbf{F}} \cdot \Delta t
+\)</span>$</p>
+<p>Substituting <span class="math notranslate nohighlight">\( \dot{\mathbf{F}} = \mathbf{L}_p \cdot \mathbf{F}_p^t \)</span>:
+$<span class="math notranslate nohighlight">\(
+\mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t + \left( \mathbf{L}_p \cdot \mathbf{F}_p^t \right) \cdot \Delta t
+\)</span>$</p>
+<p>Factoring <span class="math notranslate nohighlight">\( \mathbf{F}_p^t \)</span>:
+$<span class="math notranslate nohighlight">\(
+\mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t \cdot \left( \mathbf{I} + \mathbf{L}_p \cdot \Delta t \right)
+\)</span>$</p>
+</section>
+<section id="rate-of-deformation-tensor-strain-rate-tensor">
+<h3>Rate of deformation tensor (strain rate tensor)<a class="headerlink" href="#rate-of-deformation-tensor-strain-rate-tensor" title="Link to this heading">#</a></h3>
+<p>The rate of deformation tensor, <span class="math notranslate nohighlight">\(\mathbf{D}\)</span>, also known as the strain rate tensor, represents the symmetric part of the velocity gradient tensor, <span class="math notranslate nohighlight">\(\mathbf{L}\)</span>. It describes the rate of change of strain in the material, excluding any rotational effects. Mathematically, <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{D} = \frac{1}{2}(\mathbf{L} + \mathbf{L}^T) = 
+\left[
+\begin{matrix}
+\frac{\partial v_x}{\partial x}  &amp; \frac{1}{2}(\frac{\partial v_x}{\partial y} + \frac{\partial v_y}{\partial x}) &amp; \frac{1}{2}(\frac{\partial v_x}{\partial z} + \frac{\partial v_z}{\partial x}) \\
+\frac{1}{2}(\frac{\partial v_x}{\partial y} + \frac{\partial v_y}{\partial x}) &amp; \frac{\partial v_y}{\partial y}  &amp; \frac{1}{2}(\frac{\partial v_y}{\partial z} + \frac{\partial v_z}{\partial y}) \\
+\frac{1}{2}(\frac{\partial v_x}{\partial z} + \frac{\partial v_z}{\partial x}) &amp; \frac{1}{2}(\frac{\partial v_y}{\partial z} + \frac{\partial v_z}{\partial y}) &amp; \frac{\partial v_z}{\partial z}
+\end{matrix}
+\right]
+\end{split}\]</div>
+<p>As a 6x1 the rate of deformation tensor <span class="math notranslate nohighlight">\(\mathbf{D} = \left[\frac{dv_x}{dx}, \frac{dv_y}{dy}, \frac{dv_z}{dz}, \frac{1}{2}(\frac{dv_x}{dy} + \frac{dv_y}{dx}), \frac{1}{2}(\frac{dv_y}{dz} + \frac{dv_z}{dy}), \frac{1}{2}(\frac{dv_x}{dz} + \frac{dv_z}{dx})\right]^T\)</span></p>
+</section>
+</section>
+<section id="id1">
+<h2>Stress and Strain<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="strain-increment">
+<h3>Strain increment<a class="headerlink" href="#strain-increment" title="Link to this heading">#</a></h3>
+<p>Strain increments <span class="math notranslate nohighlight">\( \Delta \boldsymbol{\varepsilon}_p \)</span> are obtained from gradients of the nodal velocities evaluated at the material point <span class="math notranslate nohighlight">\(\boldsymbol{p}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta \boldsymbol{\varepsilon}_p = \Delta t \cdot \frac{1}{2} \left( \mathbf{L}_p + \mathbf{L}_p^T \right) = \Delta t \cdot \boldsymbol{D}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{L}_p \)</span> is the velocity gradient.</p>
+</section>
+<section id="stress-increment">
+<h3>Stress increment<a class="headerlink" href="#stress-increment" title="Link to this heading">#</a></h3>
+<p>Stress increments are obtained from the strain increments. It is computed using the material’s constitutive model:
+$<span class="math notranslate nohighlight">\(
+\Delta \boldsymbol{\sigma}_p = f (\boldsymbol{\sigma}_p, \Delta \boldsymbol{\varepsilon}_p, \boldsymbol{\theta})
+\)</span>$</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -432,20 +510,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="main_page.html"
+       href="deformation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Learn MPM 2D with Python</p>
+        <p class="prev-next-title">Description of deformation</p>
       </div>
     </a>
     <a class="right-next"
-       href="introduction.html"
+       href="practice.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Overview of Material Point Method</p>
+        <p class="prev-next-title">Practice</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -466,7 +544,18 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strain-measures">Strain measures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deformation-gradient-tensor">Deformation gradient tensor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-gradient-tensor">Velocity gradient tensor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-integration-of-deformation-gradient">Numerical integration of deformation gradient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rate-of-deformation-tensor-strain-rate-tensor">Rate of deformation tensor (strain rate tensor)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Stress and Strain</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strain-increment">Strain increment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stress-increment">Stress increment</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

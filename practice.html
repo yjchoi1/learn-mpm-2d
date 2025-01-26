@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>MPM background &#8212; Learn MPM 2D</title>
+    <title>Practice &#8212; Learn MPM 2D</title>
   
   
   
@@ -62,12 +62,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'mpm-background';</script>
-    <link rel="canonical" href="/learn-mpm-2d/mpm-background.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'practice';</script>
+    <link rel="canonical" href="/learn-mpm-2d/practice.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview of Material Point Method" href="introduction.html" />
-    <link rel="prev" title="Learn MPM 2D with Python" href="main_page.html" />
+    <link rel="next" title="Practice-1: elastic body collision" href="mpm2d-elastic-ball.html" />
+    <link rel="prev" title="Stress and strain" href="strain_measure.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -172,13 +172,13 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="practice.html">Practice</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Practice</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="mpm2d-elastic-ball.html">Practice-1: elastic body collision</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mpm2d-column-collapse.html">Practice-2: granular column collapse</a></li>
 </ul>
@@ -259,7 +259,7 @@
       
       
       
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmpm-background.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fpractice.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -289,7 +289,7 @@
       
       
       
-      <li><a href="_sources/mpm-background.md" target="_blank"
+      <li><a href="_sources/practice.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -352,9 +352,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -365,19 +363,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>MPM background</h1>
+    <h1>Practice</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -387,16 +377,13 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="mpm-background">
-<h1>MPM background<a class="headerlink" href="#mpm-background" title="Link to this heading">#</a></h1>
-<p>This part introduces brief background on MPM.</p>
-<section id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Nguyen, V. P., de Vaucorbeil, A., &amp; Bordas, S. (2023). The Material Point Method: Theory, Implementations, and Applications. Springer. <a class="reference external" href="https://doi.org/10.1007/978-3-031-24070-6">https://doi.org/10.1007/978-3-031-24070-6</a></p></li>
-<li><p><a class="reference external" href="https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body">https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body</a></p></li>
-</ul>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="practice">
+<h1>Practice<a class="headerlink" href="#practice" title="Link to this heading">#</a></h1>
+<p>Here, we provide two practice for implementing:</p>
+<p><strong>Practice-1: Two elastic body collision</strong></p>
+<p><img alt="practice-1" src="_images/sim_config.png" /></p>
+<p><strong>Practice-2: Granular column collapse</strong></p>
+<p><img alt="practice-2" src="_images/granular_column_collapse.png" /></p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -432,20 +419,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="main_page.html"
+       href="strain_measure.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Learn MPM 2D with Python</p>
+        <p class="prev-next-title">Stress and strain</p>
       </div>
     </a>
     <a class="right-next"
-       href="introduction.html"
+       href="mpm2d-elastic-ball.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Overview of Material Point Method</p>
+        <p class="prev-next-title">Practice-1: elastic body collision</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -455,22 +442,6 @@
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

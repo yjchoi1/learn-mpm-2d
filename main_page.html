@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>MPM background &#8212; Learn MPM 2D</title>
+    <title>Learn MPM 2D with Python &#8212; Learn MPM 2D</title>
   
   
   
@@ -62,12 +62,11 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'mpm-background';</script>
-    <link rel="canonical" href="/learn-mpm-2d/mpm-background.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'main_page';</script>
+    <link rel="canonical" href="/learn-mpm-2d/main_page.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview of Material Point Method" href="introduction.html" />
-    <link rel="prev" title="Learn MPM 2D with Python" href="main_page.html" />
+    <link rel="next" title="MPM background" href="mpm-background.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -119,6 +118,8 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -138,7 +139,7 @@
     
   
 
-<a class="navbar-brand logo" href="main_page.html">
+<a class="navbar-brand logo" href="#">
   
   
   
@@ -165,14 +166,14 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="main_page.html">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
                     Learn MPM 2D with Python
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
@@ -259,7 +260,7 @@
       
       
       
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmpm-background.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmain_page.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -289,7 +290,7 @@
       
       
       
-      <li><a href="_sources/mpm-background.md" target="_blank"
+      <li><a href="_sources/main_page.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -365,7 +366,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>MPM background</h1>
+    <h1>Learn MPM 2D with Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -375,7 +376,9 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisite">Prerequisite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install">Install</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspiration">Inspiration</a></li>
 </ul>
             </nav>
         </div>
@@ -387,14 +390,38 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="mpm-background">
-<h1>MPM background<a class="headerlink" href="#mpm-background" title="Link to this heading">#</a></h1>
-<p>This part introduces brief background on MPM.</p>
-<section id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="learn-mpm-2d-with-python">
+<h1>Learn MPM 2D with Python<a class="headerlink" href="#learn-mpm-2d-with-python" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>Yongjin Choi</p>
+</div></blockquote>
+<p>This repository provides hands-on practice for simple 2D material point method (MPM) code using Python jupyter notebook.</p>
+<img src="book/figs/sim_config.png" alt="sim config" style="width: 70%;"/>
+<section id="prerequisite">
+<h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Nguyen, V. P., de Vaucorbeil, A., &amp; Bordas, S. (2023). The Material Point Method: Theory, Implementations, and Applications. Springer. <a class="reference external" href="https://doi.org/10.1007/978-3-031-24070-6">https://doi.org/10.1007/978-3-031-24070-6</a></p></li>
-<li><p><a class="reference external" href="https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body">https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body</a></p></li>
+<li><p>This practice uses numpy library in python.</p></li>
+<li><p>To review basic information of MPM, please refer to <a class="reference external" href="https://www.geoelements.org/LearnMPM/mpm.html">this site</a>. It introduces governing equations, discretisation, and time integration scheme in MPM, with hands-on python practice for 1D MPM.</p></li>
+</ul>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Link to this heading">#</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initiate a python virtual environment.</span>
+python<span class="w"> </span>-m<span class="w"> </span>virtualenv<span class="w"> </span>venv
+<span class="c1"># Activate the virtual environment.</span>
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+<span class="c1"># Install dependencies.</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>./book/requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="inspiration">
+<h2>Inspiration<a class="headerlink" href="#inspiration" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/geoelements/LearnMPM">geoelements/LearnMPM</a></p></li>
+<li><p>Nguyen, V. P., de Vaucorbeil, A., &amp; Bordas, S. (2023). The material point method. Cham: Springer International Publishing.</p></li>
+<li><p><a class="github reference external" href="https://github.com/vinhphunguyen/mpmat?tab=readme-ov-file">vinhphunguyen/mpmat</a></p></li>
 </ul>
 </section>
 <div class="toctree-wrapper compound">
@@ -431,21 +458,12 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="main_page.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Learn MPM 2D with Python</p>
-      </div>
-    </a>
     <a class="right-next"
-       href="introduction.html"
+       href="mpm-background.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Overview of Material Point Method</p>
+        <p class="prev-next-title">MPM background</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -466,7 +484,9 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisite">Prerequisite</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install">Install</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspiration">Inspiration</a></li>
 </ul>
   </nav></div>
 
