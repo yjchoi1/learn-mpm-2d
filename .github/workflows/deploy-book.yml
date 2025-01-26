@@ -22,9 +22,6 @@ jobs:
           pip install -U pip
           pip install jupyter-book
 
-      - name: Create docs directory
-        run: mkdir -p docs
-
       - name: Build the book
         run: jupyter-book build ./book
 
