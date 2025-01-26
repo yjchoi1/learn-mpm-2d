@@ -1,3 +1,8 @@
+The error in your GitHub Actions workflow is caused by a missing directory `/github/workspace/docs` required during the SCSS conversion.
+
+To fix this, you can add a step to create the directory before the build step. Here is the updated workflow:
+
+```yaml
 name: Deploy Jupyter Book to GitHub Pages
 
 on:
@@ -22,6 +27,9 @@ jobs:
           pip install -U pip
           pip install jupyter-book
 
+      - name: Create docs directory
+        run: mkdir -p docs
+
       - name: Build the book
         run: |
           jupyter-book build ./book/
@@ -32,3 +40,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./book/_build/html
           publish_branch: gh-pages
+```
+
+This addition ensures the `docs` directory exists before the Jekyll build process starts.
