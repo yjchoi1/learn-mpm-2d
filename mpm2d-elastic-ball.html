@@ -174,8 +174,10 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governing_equations.html">Governing equations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpm_update.html">MPM Updates</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="practice.html">Practice</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -457,12 +459,13 @@
 <section id="problem">
 <h2>Problem<a class="headerlink" href="#problem" title="Link to this heading">#</a></h2>
 <p>This example considers two elastic circular body colliding with specified initial velocity. Two body has the same material property.</p>
-<img src="figs/sim_config.png" alt="Simulation configuration" style="width: 70%;"/></section>
+<p><img alt="practice-1" src="https://raw.githubusercontent.com/yjchoi1/learn-mpm-2d/main/book/figs/sim_config.png" /></p>
+</section>
 <section id="material-properties">
 <h2>Material properties<a class="headerlink" href="#material-properties" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">E</span> <span class="o">=</span> <span class="mi">1000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">E</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">nu</span> <span class="o">=</span> <span class="mf">0.3</span>
 <span class="n">rho</span> <span class="o">=</span> <span class="mi">2000</span>
 
@@ -611,7 +614,7 @@
 <h2>Computation cycle<a class="headerlink" href="#computation-cycle" title="Link to this heading">#</a></h2>
 <p>We are using explicit USL (update stress last) algoritm. The computation procedure is as follows. The details can be found in the original source (<a class="reference external" href="https://doi.org/10.1007/978-3-031-24070-6">Nguyen et al., 2023</a>).</p>
 <p>The entire computation cycle is as follows.</p>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p><strong>Initialization</strong></p>
 <ol class="arabic simple">
 <li><p>Set up the Cartesian grid, set time <span class="math notranslate nohighlight">\(t = 0\)</span>.</p></li>
@@ -619,54 +622,107 @@
 </ol>
 </li>
 <li><p><strong>while</strong> <span class="math notranslate nohighlight">\(t &lt; t_f\)</span> <strong>do</strong></p>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p><strong>Reset grid quantities</strong>: <span class="math notranslate nohighlight">\(m^t_I = 0\)</span>, <span class="math notranslate nohighlight">\((mv)^t_I = 0\)</span>, <span class="math notranslate nohighlight">\(f^{ext,t}_I = 0\)</span>, <span class="math notranslate nohighlight">\(f^{int,t}_I = 0\)</span>, <span class="math notranslate nohighlight">\(f^t_I = 0\)</span>.</p></li>
 <li><p><strong>Mapping from particles to nodes (P2G)</strong></p>
 <ol class="arabic simple">
-<li><p>Compute nodal mass <span class="math notranslate nohighlight">\(m^t_I = \sum_p \phi_I(x^t_p)m_p\)</span>.</p></li>
-<li><p>Compute nodal momentum <span class="math notranslate nohighlight">\((mv)^t_I = \sum_p \phi_I(x^t_p)(mv)^t_p\)</span>.</p></li>
-<li><p>Compute external force <span class="math notranslate nohighlight">\(f^{ext,t}_I = \sum_p \phi_I(x^t_p)m_pb(x_p)\)</span>.</p></li>
-<li><p>Compute internal force <span class="math notranslate nohighlight">\(f^{int,t}_I = - \sum_p V^0_p \sigma^t_p \nabla \phi_I(x^t_p)\)</span>.</p></li>
-<li><p>Compute nodal force <span class="math notranslate nohighlight">\(f^t_I = f^{ext,t}_I + f^{int,t}_I\)</span>.</p></li>
+<li><p>Compute nodal mass</p></li>
 </ol>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}
+      m^t_I = \sum_p \phi_I(x^t_p)m_p
+      $$.\\      2. Compute nodal momentum 
+      
+      \end{aligned}\end{align} \]</div>
+<p>(mv)^t_I = \sum_p \phi_I(x^t_p)(mv)^t_p
+$$</p>
+<ol class="arabic simple" start="3">
+<li><p>Compute external force</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+      f^{ext,t}_I = \sum_p \phi_I(x^t_p)m_pb(x_p)
+      \]</div>
+<ol class="arabic simple" start="4">
+<li><p>Compute internal force</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+      f^{int,t}_I = - \sum_p V^0_p \sigma^t_p \nabla \phi_I(x^t_p)
+      \]</div>
+<ol class="arabic simple" start="5">
+<li><p>Compute nodal force</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+      f^t_I = f^{ext,t}_I + f^{int,t}_I
+      \]</div>
 </li>
-<li><p><strong>Update the momenta</strong> <span class="math notranslate nohighlight">\((mv)^{t+\Delta t}_I = (mv)^t_I + f^t_I \Delta t\)</span>.</p></li>
-<li><p><strong>Fix Dirichlet nodes</strong> <span class="math notranslate nohighlight">\(I\)</span> e.g. <span class="math notranslate nohighlight">\((mv)^t_I = 0\)</span> and <span class="math notranslate nohighlight">\((mv)^{t+\Delta t}_I = 0\)</span>.</p></li>
+<li><p><strong>Update the momenta</strong></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+   (mv)^{t+\Delta t}_I = (mv)^t_I + f^t_I \Delta t
+   \]</div>
+<ol class="arabic" start="4">
+<li><p><strong>Fix Dirichlet nodes <span class="math notranslate nohighlight">\(I\)</span></strong>, e.g., <span class="math notranslate nohighlight">\((mv)^t_I = 0\)</span> and <span class="math notranslate nohighlight">\((mv)^{t+\Delta t}_I = 0\)</span>.</p></li>
 <li><p><strong>Update particles (G2P)</strong></p>
 <ol class="arabic simple">
-<li><p>Get nodal velocities <span class="math notranslate nohighlight">\(v^t_I = (mv)^t_I / m^t_I\)</span> and <span class="math notranslate nohighlight">\(v^{t+\Delta t}_I = (mv)^{t+\Delta t}_I / m^t_I\)</span>.</p></li>
-<li><p>Update particle velocities
-$<span class="math notranslate nohighlight">\(
-v^{t+\Delta t}_p = \alpha \left(v^t_p + \sum_I \phi_I(x^t_p)\left[v^{t+\Delta t}_I - v^t_I \right] \right) + (1 - \alpha) \sum_I \phi_I(x^t_p)v^{t+\Delta t}_I
-\)</span>$</p></li>
-<li><p>Update particle positions
-$<span class="math notranslate nohighlight">\(
-x^{t+\Delta t}_p = x^t_p + \Delta t \sum_I \phi_I(x^t_p)v^{t+\Delta t}_I
-\)</span>$</p></li>
-<li><p>Compute velocity gradient
-$<span class="math notranslate nohighlight">\(
-L^{t+\Delta t}_p = \sum_I \nabla \phi_I(x^t_p)v^{t+\Delta t}_I
-\)</span>$</p></li>
-<li><p>Updated gradient deformation tensor
-$<span class="math notranslate nohighlight">\(
-F^{t+\Delta t}_p = (I + L^{t+\Delta t}_p \Delta t) F^t_p
-\)</span>$</p></li>
-<li><p>Update volume
-$<span class="math notranslate nohighlight">\(
-V^{t+\Delta t}_p = \text{det}(F^{t+\Delta t}_p) V^0_p
-\)</span>$</p></li>
-<li><p>Compute the rate of deformation matrix
-$<span class="math notranslate nohighlight">\(
-D^{t+\Delta t}_p = 0.5(L^{t+\Delta t}_p + (L^{t+\Delta t}_p)^T)
-\)</span>$</p></li>
-<li><p>Compute the strain increment
-$<span class="math notranslate nohighlight">\(
-\Delta \varepsilon_p = \Delta t D^{t+\Delta t}_p
-\)</span>$</p></li>
-<li><p>Update stresses:
-$<span class="math notranslate nohighlight">\(
-\sigma^{t+\Delta t}_p = \sigma^t_p + \Delta \sigma \Delta \varepsilon_p \quad \text{or} \quad \sigma^{t+\Delta t}_p = \sigma^t(F^{t+\Delta t}_p)
-\)</span>$</p></li>
+<li><p>Get nodal velocities</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+      v^t_I = (mv)^t_I / m^t_I \ \text{and} \ v^{t+\Delta t}_I = (mv)^{t+\Delta t}_I / m^t_I
+      \]</div>
+<ol class="arabic" start="2">
+<li><p>Update particle velocities</p>
+<div class="math notranslate nohighlight">
+\[
+         v^{t+\Delta t}_p = \alpha \left(v^t_p + \sum_I \phi_I(x^t_p)\left[v^{t+\Delta t}_I - v^t_I \right] \right) + (1 - \alpha) \sum_I \phi_I(x^t_p)v^{t+\Delta t}_I
+         \]</div>
+</li>
+<li><p>Update particle positions</p>
+<div class="math notranslate nohighlight">
+\[
+         x^{t+\Delta t}_p = x^t_p + \Delta t \sum_I \phi_I(x^t_p)v^{t+\Delta t}_I
+         \]</div>
+</li>
+<li><p>Compute velocity gradient</p>
+<div class="math notranslate nohighlight">
+\[
+         L^{t+\Delta t}_p = \sum_I \nabla \phi_I(x^t_p)v^{t+\Delta t}_I
+         \]</div>
+</li>
+<li><p>Updated gradient deformation tensor</p>
+<div class="math notranslate nohighlight">
+\[
+         F^{t+\Delta t}_p = (I + L^{t+\Delta t}_p \Delta t) F^t_p
+         \]</div>
+</li>
+<li><p>Update volume</p>
+<div class="math notranslate nohighlight">
+\[
+         V^{t+\Delta t}_p = \text{det}(F^{t+\Delta t}_p) V^0_p
+         \]</div>
+</li>
+<li><p>Compute the rate of deformation matrix</p>
+<div class="math notranslate nohighlight">
+\[
+         D^{t+\Delta t}_p = 0.5(L^{t+\Delta t}_p + (L^{t+\Delta t}_p)^T)
+         \]</div>
+</li>
+<li><p>Compute the strain increment</p>
+<div class="math notranslate nohighlight">
+\[
+         \Delta \varepsilon_p = \Delta t D^{t+\Delta t}_p
+         \]</div>
+</li>
+<li><p>Update stresses:</p>
+<div class="math notranslate nohighlight">
+\[
+         \sigma^{t+\Delta t}_p = \sigma^t_p + \Delta \sigma \Delta \varepsilon_p \quad \text{or} \quad \sigma^{t+\Delta t}_p = \sigma^t(F^{t+\Delta t}_p)
+         \]</div>
+</li>
 </ol>
 </li>
 <li><p><strong>Advance time</strong> <span class="math notranslate nohighlight">\(t = t + \Delta t\)</span>.</p></li>

@@ -1,0 +1,812 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MPM Updates &#8212; Learn MPM 2D</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mpm_update';</script>
+    <link rel="canonical" href="/learn-mpm-2d/mpm_update.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Practice" href="practice.html" />
+    <link rel="prev" title="Stress and strain" href="strain_measure.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="main_page.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Learn MPM 2D - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Learn MPM 2D - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="main_page.html">
+                    Learn MPM 2D with Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governing_equations.html">Governing equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">MPM Updates</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="practice.html">Practice</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mpm2d-elastic-ball.html">Practice-1: elastic body collision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpm2d-column-collapse.html">Practice-2: granular column collapse</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmpm_update.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/mpm_update.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>MPM Updates</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-stress-last-usl-scheme">Update stress last (USL) scheme</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">1. <strong>Initialization</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-stepping-loop">2. <strong>Time-Stepping Loop</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-1-reset-grid-quantities"><strong>Step 2.1: Reset Grid Quantities</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-2-mapping-from-particles-to-nodes-p2g"><strong>Step 2.2: Mapping from Particles to Nodes (P2G)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-3-update-the-momenta"><strong>Step 2.3: Update the Momenta</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-4-fix-dirichlet-nodes"><strong>Step 2.4: Fix Dirichlet Nodes</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-5-update-particles-g2p"><strong>Step 2.5: Update Particles (G2P)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-6-advance-time"><strong>Step 2.6: Advance Time</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-computation-cycle">End of computation cycle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary"><strong>Summary</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="mpm-updates">
+<h1>MPM Updates<a class="headerlink" href="#mpm-updates" title="Link to this heading">#</a></h1>
+<section id="update-stress-last-usl-scheme">
+<h2>Update stress last (USL) scheme<a class="headerlink" href="#update-stress-last-usl-scheme" title="Link to this heading">#</a></h2>
+<p>Below is the USL (Update Stress Last) Material Point Method (MPM) scheme with explanations for each step.</p>
+<section id="initialization">
+<h3>1. <strong>Initialization</strong><a class="headerlink" href="#initialization" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p><strong>Set up the background mesh (i.e., grid), set time <span class="math notranslate nohighlight">\( t = 0 \)</span>.</strong></p>
+<p>A fixed grid is established over the computational domain. Although the grid itself does not deform, it serves as a temporary computational structure to evaluate forces and accelerations. The simulation time is initialized.</p>
+</li>
+<li><p><strong>Set up particle data: <span class="math notranslate nohighlight">\( x^0_p, v^0_p, \sigma^0_p, F^0_p, V^0_p, m_p, \rho_p^0 \)</span>.</strong></p>
+<p>Material points (or particles) carry the physical information of the continuum body. Each particle is assigned:</p>
+<ul class="simple">
+<li><p><strong>Position <span class="math notranslate nohighlight">\( x^0_p \)</span>:</strong> Where the particle is located.</p></li>
+<li><p><strong>Velocity <span class="math notranslate nohighlight">\( v^0_p \)</span>:</strong> Its initial speed and direction.</p></li>
+<li><p><strong>Stress <span class="math notranslate nohighlight">\( \sigma^0_p \)</span>:</strong> The initial state of internal forces.</p></li>
+<li><p><strong>Deformation gradient <span class="math notranslate nohighlight">\( F^0_p \)</span>:</strong> Describes how the particle’s local configuration deforms.</p></li>
+<li><p><strong>Volume <span class="math notranslate nohighlight">\( V^0_p \)</span>:</strong> Its initial volume.</p></li>
+<li><p><strong>Mass <span class="math notranslate nohighlight">\( m_p \)</span>:</strong> Its mass, which is constant.</p></li>
+<li><p><strong>Density <span class="math notranslate nohighlight">\( \rho_p^0 \)</span>:</strong> The initial mass per unit volume.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="time-stepping-loop">
+<h3>2. <strong>Time-Stepping Loop</strong><a class="headerlink" href="#time-stepping-loop" title="Link to this heading">#</a></h3>
+<p>The simulation advances in time steps <span class="math notranslate nohighlight">\(\Delta t\)</span> until a final time <span class="math notranslate nohighlight">\( t_f \)</span> is reached.</p>
+<section id="step-2-1-reset-grid-quantities">
+<h4><strong>Step 2.1: Reset Grid Quantities</strong><a class="headerlink" href="#step-2-1-reset-grid-quantities" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>What is done:</strong><br />
+At the start of each time step, for every grid node <span class="math notranslate nohighlight">\( I \)</span>, the following quantities are reset to zero:</p>
+<ul>
+<li><p>Mass: <span class="math notranslate nohighlight">\( m^t_I = 0 \)</span></p></li>
+<li><p>Momentum: <span class="math notranslate nohighlight">\( (mv)^t_I = 0 \)</span></p></li>
+<li><p>External force: <span class="math notranslate nohighlight">\( f^{ext,t}_I = 0 \)</span></p></li>
+<li><p>Internal force: <span class="math notranslate nohighlight">\( f^{int,t}_I = 0 \)</span></p></li>
+<li><p>Total force: <span class="math notranslate nohighlight">\( f^t_I = 0 \)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Explanation:</strong><br />
+Each time step involves re-computing the nodal quantities from scratch based on updated particle data.</p></li>
+</ul>
+</section>
+<section id="step-2-2-mapping-from-particles-to-nodes-p2g">
+<h4><strong>Step 2.2: Mapping from Particles to Nodes (P2G)</strong><a class="headerlink" href="#step-2-2-mapping-from-particles-to-nodes-p2g" title="Link to this heading">#</a></h4>
+<p>The Particle-to-Grid (P2G) step transfers particle information to the grid nodes using shape functions, denoted by <span class="math notranslate nohighlight">\( \phi_I(x^t_p) \)</span>. The shape functions determine how much influence a particle has on a given node based on its location.</p>
+<ol class="arabic">
+<li><p><strong>Compute nodal mass</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   m^t_I = \sum_p \phi_I(x^t_p)m_p.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+Each particle’s mass <span class="math notranslate nohighlight">\( m_p \)</span> is distributed to surrounding grid nodes, weighted by the shape function. This creates a nodal mass field that is used in subsequent momentum and acceleration calculations.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute nodal momentum</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   (mv)^t_I = \sum_p \phi_I(x^t_p)(mv)^t_p.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+Similarly, the momentum (mass times velocity) of each particle is mapped to the grid nodes. The resulting nodal momentum provides the basis for updating nodal velocities.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute external force</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   f^{ext,t}_I = \sum_p \phi_I(x^t_p)m_p b(x_p).
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+External forces (for example, gravity, represented by <span class="math notranslate nohighlight">\( b(x_p) \)</span>) are applied to the particles. These forces are then transferred to the grid nodes, ensuring that body forces influence the motion of the system.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute internal force</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   f^{int,t}_I = - \sum_p V^0_p \sigma^t_p \nabla \phi_I(x^t_p).
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+Internal forces arise from the stress within the material. The particle stress <span class="math notranslate nohighlight">\( \sigma^t_p \)</span> is weighted by the gradient of the shape function, and the negative sign follows from the conventional formulation in continuum mechanics (where tension/compression results in opposite force directions). The initial volume <span class="math notranslate nohighlight">\( V^0_p \)</span> is used to scale the stress contribution appropriately.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute nodal force</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   f^t_I = f^{ext,t}_I + f^{int,t}_I.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+The total force at each grid node is simply the sum of the external and internal forces. This net force is what will drive the change in momentum on the grid.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="step-2-3-update-the-momenta">
+<h4><strong>Step 2.3: Update the Momenta</strong><a class="headerlink" href="#step-2-3-update-the-momenta" title="Link to this heading">#</a></h4>
+<ul>
+<li><p><strong>Operation:</strong></p>
+<div class="math notranslate nohighlight">
+\[
+  (mv)^{t+\Delta t}_I = (mv)^t_I + f^t_I \Delta t.
+  \]</div>
+</li>
+<li><p><strong>Explanation:</strong><br />
+This is a direct application of Newton’s second law (force equals the rate of change of momentum). By multiplying the net force by the time step <span class="math notranslate nohighlight">\(\Delta t\)</span>, the nodal momentum is updated explicitly. This step is crucial for advancing the system in time.</p></li>
+</ul>
+</section>
+<section id="step-2-4-fix-dirichlet-nodes">
+<h4><strong>Step 2.4: Fix Dirichlet Nodes</strong><a class="headerlink" href="#step-2-4-fix-dirichlet-nodes" title="Link to this heading">#</a></h4>
+<ul>
+<li><p><strong>Operation:</strong></p>
+<p>For nodes with prescribed (Dirichlet) boundary conditions, set</p>
+<div class="math notranslate nohighlight">
+\[
+  (mv)^t_I = 0 \quad \text{and} \quad (mv)^{t+\Delta t}_I = 0.
+  \]</div>
+</li>
+<li><p><strong>Explanation:</strong><br />
+Certain boundaries in the physical problem might be fixed (e.g., a wall or a clamped edge). To enforce these conditions, the momentum at the corresponding grid nodes is manually set to zero, ensuring that the nodes do not move contrary to the specified constraints.</p></li>
+</ul>
+</section>
+<section id="step-2-5-update-particles-g2p">
+<h4><strong>Step 2.5: Update Particles (G2P)</strong><a class="headerlink" href="#step-2-5-update-particles-g2p" title="Link to this heading">#</a></h4>
+<p>After computing grid nodal quantities, the updated information is transferred back to the particles in the Grid-to-Particle (G2P) step.</p>
+<ol class="arabic">
+<li><p><strong>Get nodal velocities</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   v^t_I = \frac{(mv)^t_I}{m^t_I} \quad \text{and} \quad v^{t+\Delta t}_I = \frac{(mv)^{t+\Delta t}_I}{m^t_I}.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+The velocity at each grid node is computed by dividing the nodal momentum by the nodal mass. These nodal velocities are then used to update particle properties.</p></li>
+</ul>
+</li>
+<li><p><strong>Update particle velocities</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   v^{t+\Delta t}_p = \alpha \left(v^t_p + \sum_I \phi_I(x^t_p)\left[v^{t+\Delta t}_I - v^t_I \right] \right) + (1 - \alpha) \sum_I \phi_I(x^t_p)v^{t+\Delta t}_I.
+   \]</div>
+<ul>
+<li><p><strong>Explanation:</strong><br />
+This step updates the particle velocity by blending:</p>
+<ul class="simple">
+<li><p>The change in velocity from the grid nodes (<span class="math notranslate nohighlight">\(v^{t+\Delta t}_I - v^t_I\)</span>), which is added to the previous particle velocity <span class="math notranslate nohighlight">\(v^t_p\)</span>, and</p></li>
+<li><p>The newly computed grid velocity <span class="math notranslate nohighlight">\(v^{t+\Delta t}_I\)</span>.</p></li>
+</ul>
+<p>The weighting factor <span class="math notranslate nohighlight">\(\alpha\)</span> (between 0 and 1) controls the numerical damping and stability of the method. The use of the shape function <span class="math notranslate nohighlight">\( \phi_I(x^t_p) \)</span> ensures that the grid data is interpolated to the exact location of each particle.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Update particle positions</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   x^{t+\Delta t}_p = x^t_p + \Delta t \sum_I \phi_I(x^t_p)v^{t+\Delta t}_I.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+Each particle’s new position is determined by moving it in the direction of the interpolated grid velocity. The displacement is the product of the time step <span class="math notranslate nohighlight">\(\Delta t\)</span> and the weighted nodal velocities.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute velocity gradient</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   L^{t+\Delta t}_p = \sum_I \nabla \phi_I(x^t_p)v^{t+\Delta t}_I.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+The velocity gradient <span class="math notranslate nohighlight">\(L\)</span> quantifies how the velocity field changes in space around each particle. This information is necessary for updating the deformation of the material.</p></li>
+</ul>
+</li>
+<li><p><strong>Update gradient deformation tensor</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   F^{t+\Delta t}_p = (I + L^{t+\Delta t}_p \Delta t) F^t_p.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+The deformation gradient <span class="math notranslate nohighlight">\(F\)</span> captures the cumulative deformation history of a particle. The term <span class="math notranslate nohighlight">\(I + L^{t+\Delta t}_p \Delta t\)</span> represents the incremental deformation during the time step. Multiplying by the previous deformation gradient <span class="math notranslate nohighlight">\(F^t_p\)</span> updates the particle’s state.</p></li>
+</ul>
+</li>
+<li><p><strong>Update volume</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   V^{t+\Delta t}_p = \det(F^{t+\Delta t}_p) V^0_p.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+As the material deforms, the volume of each particle may change. The determinant of the deformation gradient <span class="math notranslate nohighlight">\( \det(F) \)</span> gives the local volume change ratio. Multiplying this by the original volume <span class="math notranslate nohighlight">\( V^0_p \)</span> provides the updated volume.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute the rate of deformation matrix</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   D^{t+\Delta t}_p = 0.5\left(L^{t+\Delta t}_p + \left(L^{t+\Delta t}_p\right)^T\right).
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+The rate of deformation matrix <span class="math notranslate nohighlight">\(D\)</span> is the symmetric part of the velocity gradient. It represents the pure deformation (stretching and shearing) without any rigid-body rotation. This is key for constitutive models that relate strain rate to stress rate.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute the strain increment</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   \Delta \varepsilon_p = \Delta t\, D^{t+\Delta t}_p.
+   \]</div>
+<ul class="simple">
+<li><p><strong>Explanation:</strong><br />
+The strain increment is the change in strain over the time step, calculated by multiplying the rate of deformation <span class="math notranslate nohighlight">\(D\)</span> by the time step <span class="math notranslate nohighlight">\(\Delta t\)</span>. This increment is then used to update the stress state.</p></li>
+</ul>
+</li>
+<li><p><strong>Update stresses</strong></p>
+<div class="math notranslate nohighlight">
+\[
+   \sigma^{t+\Delta t}_p = \sigma^t_p + \Delta \sigma\, \Delta \varepsilon_p \quad \text{or} \quad \sigma^{t+\Delta t}_p = \sigma^t\left(F^{t+\Delta t}_p\right).
+   \]</div>
+<ul>
+<li><p><strong>Explanation:</strong><br />
+Finally, the stress in each particle is updated. There are typically two approaches:</p>
+<ul class="simple">
+<li><p><strong>Incremental update:</strong> The stress is updated using the strain increment multiplied by a stiffness-like term <span class="math notranslate nohighlight">\( \Delta \sigma \)</span> (which depends on the material model).</p></li>
+<li><p><strong>Direct evaluation:</strong> The stress is computed as a function of the updated deformation gradient <span class="math notranslate nohighlight">\( F^{t+\Delta t}_p \)</span>.</p></li>
+</ul>
+<p>The choice depends on the constitutive model employed for the material.</p>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="step-2-6-advance-time">
+<h4><strong>Step 2.6: Advance Time</strong><a class="headerlink" href="#step-2-6-advance-time" title="Link to this heading">#</a></h4>
+<ul>
+<li><p><strong>Operation:</strong></p>
+<div class="math notranslate nohighlight">
+\[
+  t = t + \Delta t.
+  \]</div>
+</li>
+<li><p><strong>Explanation:</strong><br />
+After completing the updates for the current time step, the simulation time is advanced by the time increment <span class="math notranslate nohighlight">\(\Delta t\)</span>, preparing the algorithm for the next cycle.</p></li>
+</ul>
+</section>
+</section>
+<section id="end-of-computation-cycle">
+<h3>End of computation cycle<a class="headerlink" href="#end-of-computation-cycle" title="Link to this heading">#</a></h3>
+</section>
+<section id="summary">
+<h3><strong>Summary</strong><a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Mappings:</strong><br />
+The algorithm uses two mappings:</p>
+<ul>
+<li><p><strong>P2G (Particle-to-Grid):</strong> Transfers mass, momentum, and forces from the particles to the grid, enabling the evaluation of spatial derivatives and forces.</p></li>
+<li><p><strong>G2P (Grid-to-Particle):</strong> Transfers updated nodal velocities and computed quantities back to the particles, allowing them to update their state variables (velocity, position, deformation, and stress).</p></li>
+</ul>
+</li>
+<li><p><strong>Explicit Time Integration:</strong><br />
+The scheme is explicit, meaning that each update is computed directly from known quantities at the current time step. This requires careful selection of the time step <span class="math notranslate nohighlight">\(\Delta t\)</span> to maintain numerical stability.</p></li>
+<li><p><strong>Update Stress Last:</strong><br />
+In the USL formulation, stress is updated after the particle’s kinematic quantities (like velocity and deformation) have been updated.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="strain_measure.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Stress and strain</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="practice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Practice</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-stress-last-usl-scheme">Update stress last (USL) scheme</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">1. <strong>Initialization</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-stepping-loop">2. <strong>Time-Stepping Loop</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-1-reset-grid-quantities"><strong>Step 2.1: Reset Grid Quantities</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-2-mapping-from-particles-to-nodes-p2g"><strong>Step 2.2: Mapping from Particles to Nodes (P2G)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-3-update-the-momenta"><strong>Step 2.3: Update the Momenta</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-4-fix-dirichlet-nodes"><strong>Step 2.4: Fix Dirichlet Nodes</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-5-update-particles-g2p"><strong>Step 2.5: Update Particles (G2P)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-6-advance-time"><strong>Step 2.6: Advance Time</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-computation-cycle">End of computation cycle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary"><strong>Summary</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yongjin Choi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

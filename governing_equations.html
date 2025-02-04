@@ -1,0 +1,696 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Governing equations &#8212; Learn MPM 2D</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'governing_equations';</script>
+    <link rel="canonical" href="/learn-mpm-2d/governing_equations.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Description of deformation" href="deformation.html" />
+    <link rel="prev" title="Overview of Material Point Method" href="introduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="main_page.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Learn MPM 2D - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Learn MPM 2D - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="main_page.html">
+                    Learn MPM 2D with Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Governing equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpm_update.html">MPM Updates</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="practice.html">Practice</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mpm2d-elastic-ball.html">Practice-1: elastic body collision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpm2d-column-collapse.html">Practice-2: granular column collapse</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fgoverning_equations.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/governing_equations.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Governing equations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strong-form">Strong form</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weak-form-and-spatial-discretisation">Weak form and spatial discretisation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-integration-and-numerical-implementation">Time integration and numerical implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-properties">Conservation properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referece">Referece</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="governing-equations">
+<h1>Governing equations<a class="headerlink" href="#governing-equations" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>This material is reiteration of <a class="reference external" href="https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body">this repo</a>.</p>
+</div></blockquote>
+<section id="strong-form">
+<h2>Strong form<a class="headerlink" href="#strong-form" title="Link to this heading">#</a></h2>
+<p>Material motion is mathematically represented by the conservation laws expressed in differential form. For the problems considered here, the governing equations include only the conservation of mass and momentum.</p>
+<p>The conservation of mass which is also referred to as the continuity equation (\ref{mass-conservation}) states that mass of a closed system (i.e. closed to all transfers of matter and energy) must remain constant.</p>
+<div class="math notranslate nohighlight">
+\[
+\dfrac{d \rho}{dt} + \rho \nabla \cdot \mathbf{v} = 0
+\]</div>
+<p>The linear momentum balance equation is also called as the equation of motion and it is derived by applying the Newton’s second law to a continuum body.</p>
+<div class="math notranslate nohighlight">
+\[
+\rho \dfrac{d \mathbf{v}}{dt} = \nabla \cdot \pmb{\sigma} + \rho \mathbf{b}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho(\mathbf{x},t)\)</span> is the mass density, <span class="math notranslate nohighlight">\(\pmb{\sigma}(\mathbf{x},t)\)</span> is the symmetric Cauchy stress tensor and <span class="math notranslate nohighlight">\(\mathbf{b}(\mathbf{x},t)\)</span> is the external body force.</p>
+</section>
+<section id="weak-form-and-spatial-discretisation">
+<h2>Weak form and spatial discretisation<a class="headerlink" href="#weak-form-and-spatial-discretisation" title="Link to this heading">#</a></h2>
+<p>MPM describes the whole material domain, <span class="math notranslate nohighlight">\(\Omega\)</span> with a set of Lagrangian material points that are tracked throughout the deformation process.
+An Eulerian grid is used to solve the equation of motion.
+The grey circles are the material points <span class="math notranslate nohighlight">\(x_{p}\)</span>, where <em>p</em> represents a material point, and the computational nodes are the points of intersection of the grid (denoted as <span class="math notranslate nohighlight">\(X_{i}\)</span>, where <em>i</em> represents a computational node).
+The MPM involves discretising the domain, <span class="math notranslate nohighlight">\(\Omega\)</span>, with a set of material points.
+The material points are assigned an initial value of position, velocity, mass, volume, and stress, denoted as
+<span class="math notranslate nohighlight">\(\mathbf{x}_{p}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\mathit{v}}_{p}\)</span>, <span class="math notranslate nohighlight">\(\mathit{m}_{p}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{V}_{p}\)</span>, and <span class="math notranslate nohighlight">\(\sigma_{p}\)</span>.
+Depending on the material being simulated, additional parameters, like pressure, temperature, pore-water pressure, etc., are specified at the material points.
+The material points are assumed to be within the computational grid which for ease of computation, is assumed to be a Cartesian lattice.
+At every time step <span class="math notranslate nohighlight">\(\mathit{t}_{k}\)</span>, the MPM computation cycle involves projecting the data, such as position, mass, and velocity, from the material points to the computational grid using the standard nodal basis functions, called the <em>shape functions</em>, derived from the position of the particle with respect to the grid.
+Gradient terms are calculated on the computational grid, and the governing equation, i.e. the equation of motion, is solved with the updated position and velocity values mapping back to the material points.
+The mesh is reinitialised to its original state and the computational cycle is repeated.</p>
+<p>The material domain is discretized in to a <span class="math notranslate nohighlight">\(n_p\)</span> number of points in its initial configuration, <span class="math notranslate nohighlight">\(\Omega^0\)</span> with its material coordinates <span class="math notranslate nohighlight">\(\mathbf{x}_p^0\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_p^t\)</span> at time <span class="math notranslate nohighlight">\(t\)</span> <span class="math notranslate nohighlight">\((p = 1, 2, ..., n_p)\)</span>. Each material point represents an infinitesimal mass element with a fixed mass <span class="math notranslate nohighlight">\(M_p\)</span> through out the computation. Hence, mass density can be expressed as</p>
+<div class="math notranslate nohighlight">
+\[
+\rho(\mathbf{x},t) = \sum_{p=1}^{n_p} M_p \delta (\mathbf{x} - \mathbf{x}_p^t)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta\)</span> is the Dirac delta function.</p>
+<p><img alt="MPM discretization" src="https://raw.githubusercontent.com/geoelements/learn-mpm/main/book/img/mpm-discretization.png" /></p>
+<p>The background mesh consists of a total number of nodes, <span class="math notranslate nohighlight">\(n_n\)</span> that are located at <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> with shape functions <span class="math notranslate nohighlight">\(N_i(\mathbf{x})\)</span> (<span class="math notranslate nohighlight">\(i = 1,2,...,n_n\)</span>). The position, displacement, velocity and acceleration at any point in the continuum body are approximated using the shape functions similar to the finite element method.</p>
+<p>The coordinates of a point at any given time is approximated using the nodal basis functions as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x} = \sum_{i=1}^{n_n} \mathbf{x}_i N_i(\mathbf{x})
+\]</div>
+<p>Similarly, the displacement, velocity and acceleration fields of a point in the material domain at any given time <span class="math notranslate nohighlight">\(t\)</span> can be approximated by</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{u} (\mathbf{x},t) = \sum_{i=1}^{n_n} \mathbf{u}_i(t) N_i(\mathbf{x})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{v} (\mathbf{x},t) = \sum_{i=1}^{n_n} \mathbf{v}_i(t) N_i(\mathbf{x})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{a} (\mathbf{x},t) = \sum_{i=1}^{n_n} \mathbf{a}_i(t) N_i(\mathbf{x})
+\]</div>
+<p>The fixed mass, <span class="math notranslate nohighlight">\(m_p\)</span> at the material points in equation implies that the equation of conservation of mass is automatically satisfied.</p>
+<p>Following the finite element method, the weak form of the linear momentum balance equation is obtained by multiplying the momentum conservation equation by a test function, <span class="math notranslate nohighlight">\(\delta \mathbf{v}\)</span>  and integrating over the current configuration, <span class="math notranslate nohighlight">\(\Omega\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{\Omega} \delta \mathbf{v} \cdot \rho \mathbf{a} \hspace{3pt} d\Omega = \int_{\Omega} \delta \mathbf{v} \nabla \cdot \pmb{\sigma} \hspace{3pt} d\Omega + \int_{\Omega} \delta \mathbf{v}  \cdot \rho \mathbf{b} \hspace{3pt} d\Omega
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\Omega\)</span> is the differential volume.</p>
+<p>The test function, <span class="math notranslate nohighlight">\(\delta \mathbf{v}\)</span> is also expressed using the nodal basis functions as in equation.</p>
+<div class="math notranslate nohighlight">
+\[
+\delta \mathbf{v} (\mathbf{x},t) = \sum_{i=1}^{n_n} \delta \mathbf{v}_i(t) N_i(\mathbf{x})
+\]</div>
+<p>Applying integration by parts and the divergence theorem to the term involving the stress, weak form equation can be rewritten as</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{\Omega} \rho \delta \mathbf{v} \cdot \mathbf{a} \hspace{3pt} d\Omega = -\int_{\Omega} \nabla \delta \mathbf{v} : \pmb{\sigma} \hspace{3pt} d\Omega + \int_{\partial \Omega_\Gamma} \delta \mathbf{v} \hspace{3pt} \cdot \mathbf{t} \hspace{3pt} dS + \int_{\Omega}  \rho \delta \mathbf{v}  \cdot \mathbf{b} \hspace{3pt} d\Omega
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(dS\)</span> is the differential surface, <span class="math notranslate nohighlight">\(\mathbf{t} = \pmb{\sigma} \cdot \mathbf{n}\)</span> is the prescribed surface traction and <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> is the unit normal vector to the boundary.</p>
+<p>Substituting acceleration equations and test function in the weak form equation gives</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\sum_{i,j=1}^{n_n} \int_{\Omega} \rho N_i(\mathbf{x}) N_j(\mathbf{x}) \mathbf{a}_j(t) \hspace{3pt} d\Omega = &amp; -\sum_{i=1}^{n_n} \int_{\Omega} \nabla N_i(\mathbf{x}) : \pmb{\sigma} (\mathbf{x},t) \hspace{3pt} d\Omega \\
+&amp; + \sum_{i=1}^{n_n} \int_{\partial \Omega_\Gamma} N_i(\mathbf{x}) \mathbf{t}(\mathbf{x},t) \hspace{3pt}dS \\
+&amp; + \sum_{i=1}^{n_n} \int_{\Omega} \rho N_i(\mathbf{x}) \mathbf{b}(\mathbf{x},t) \hspace{3pt} d\Omega
+\end{aligned}
+\end{split}\]</div>
+<p>In contrary to the Gauss integration in FEM, MPM considers the locations of material particles as the integration points. This converts the integrals in weak form equation into sums over the material particles. As a result, the semi discrete momentum equation can be written in the form of</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{j=1}^{n_n} M_{ij} \mathbf{a}_j = \mathbf{F}_i^{int} + \mathbf{F}_i^{ext}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(M_{ij}\)</span> is the consistent mass matrix, <span class="math notranslate nohighlight">\(\mathbf{F}_i^{int}\)</span> is the internal force vector and <span class="math notranslate nohighlight">\(\mathbf{F}_i^{ext}\)</span> is the external force vector.</p>
+<p>The consistent mass matrix is given by</p>
+<div class="math notranslate nohighlight">
+\[
+M_{ij} = \sum_{p=1}^{n_p} N_i(\mathbf{x}_p) N_j(\mathbf{x}_p) M_p
+\]</div>
+<p>The internal force vector computed at the grid nodes is written as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{F}_i^{int} = - \sum_{p=1}^{n_p} \nabla N_i(\mathbf{x}_p) : \pmb{\sigma}(\mathbf{x}_p,t) V_p
+\]</div>
+<p>and the external force vector is</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{F}_i^{ext} = \int_{\partial \Omega_\Gamma} N_i(\mathbf{x}) \mathbf{t} (\mathbf{x},t) \hspace{3pt} dS + \sum_{p=1}^{n_p} N_i(\mathbf{x}_p) \mathbf{b}(\mathbf{x}_p,t)M_p
+\]</div>
+<p>In the standard MPM formulation, the consistent mass matrix is generally replaced by the lumped masses at nodes, <span class="math notranslate nohighlight">\(m_i\)</span>. This practice leads to a straightforward computation of the nodal acceleration in semi-discrete formulation.</p>
+</section>
+<section id="time-integration-and-numerical-implementation">
+<h2>Time integration and numerical implementation<a class="headerlink" href="#time-integration-and-numerical-implementation" title="Link to this heading">#</a></h2>
+<p>In order to obtain the fully discrete form of the governing equations, semi-discrete equation must be discretized in time. MPM is well known for its explicit dynamic formulation which employs the forward Euler (explicit) time integration scheme. This follows that nodal acceleration in semi-discrete equation is solved explicitly using the known internal and external forces at the current configuration at time <span class="math notranslate nohighlight">\(t\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+m_i^t \mathbf{a}_i^t = \mathbf{F}_i^{t,int} +\mathbf{F}_i^{t,ext}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(m_i^t\)</span> is lumped mass at the nodes.</p>
+<p>The implicit velocity, <span class="math notranslate nohighlight">\(\mathbf{v}_i^{t+\triangle t}\)</span> is computed as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{v}_i^{t+\triangle t} = \mathbf{v}_i^t + \triangle t \hspace{3pt} \mathbf{a}_i^t
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\triangle t\)</span> is the time increment.</p>
+<p>The explicit time integration is computationally convenient. However, it is a conditionally stable scheme which restricts the time step size to ensure numerical stability. Consequently, the time step must satisfy the Courant–Friedrichs–Lewy (CFL) condition. This is a necessary condition for convergence in explicit time marching numerical methods.</p>
+<p>For one dimensional case, the CFL condition has the following form,</p>
+<div class="math notranslate nohighlight">
+\[
+C = \dfrac{u \Delta t}{\Delta x} \leq C_{max}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(u\)</span> is the characteristic wave speed,  <span class="math notranslate nohighlight">\(\Delta x\)</span> is the spacing of the grid, <span class="math notranslate nohighlight">\(\Delta t\)</span> is the time step size and <span class="math notranslate nohighlight">\(C_{max}\)</span> is the maximum Courant number which is unity for most explicit methods.</p>
+<p>In other words, <span class="math notranslate nohighlight">\(\Delta t &lt; \Delta t_{cr}\)</span>, where <span class="math notranslate nohighlight">\(\Delta t_{cr}\)</span> denotes critical timestep evaluated as follows.</p>
+<div class="math notranslate nohighlight">
+\[
+ \Delta t_{cr} = \frac{d}{c} = \frac{d}{E/\rho}
+ \]</div>
+<p>Here, <span class="math notranslate nohighlight">\(E\)</span> is the Young modulus and <span class="math notranslate nohighlight">\(\rho\)</span> is the density of the linear elastic material. For non-linear problems, <span class="math notranslate nohighlight">\(\Delta t_{cr}\)</span> is decreased by Courant number with <span class="math notranslate nohighlight">\(0 &lt; C_{NB} &lt; 1\)</span>, i.e., <span class="math notranslate nohighlight">\(\Delta t_{cr} := C_{NB} \Delta t_{cr}\)</span>.</p>
+<p>In order to solve the fully discrete form and velocity update equation at the grid nodes,  mass and velocity carried by the material points must be transferred to the background grid. At the beginning of each Lagrangian time step,  particle mass is mapped to the nodes using</p>
+<div class="math notranslate nohighlight">
+\[
+m_i^t = \sum_{p=1}^{n_p} N_i(\mathbf{x}_p^t) M_p
+\]</div>
+<p>Nodal velocity at each time step is computed by mapping particle momentum as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{v}_i^t = \dfrac{\sum_{p=1}^{n_p}M_p \mathbf{v}_p^t N_i(\mathbf{x}_p^t)}{m_i^t}
+\]</div>
+<p>With acceleration, <span class="math notranslate nohighlight">\(\mathbf{a}_i^t\)</span> solved at the nodes using fully discrete form equation, the material points are updated while the grid is assumed to move with the computed velocity field. Moving of material points through the grid completes the Lagrangian description used in the MPM formulation.</p>
+<p>Finally, the velocity and the position of material points are updated by</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{v}_p^{t + \triangle t} = \mathbf{v}_p^t + \triangle t \hspace{3pt} \sum_{i=1}^{n_n}N_i(\mathbf{x}_p^t) \mathbf{a}_i^t
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_p^{t + \triangle t} = \mathbf{x}_p^t + \triangle t \hspace{3pt} \sum_{i=1}^{n_n}N_i(\mathbf{x}_p^t) \mathbf{v}_i^{t + \triangle t}
+\]</div>
+<p>It should be noted from internal force equation that stress and strain are carried by the material points. This implies that the constitutive equations are applied at the material points. As a result, following the history of deformation is convenient in MPM. Similarly, the external body forces are also applied at the material points as in the external force equation.</p>
+</section>
+<section id="conservation-properties">
+<h2>Conservation properties<a class="headerlink" href="#conservation-properties" title="Link to this heading">#</a></h2>
+<p>MPM automatically satisfies the mass conservation by assigning a constant mass to each material point.
+The momentum balance is enforced in governing equations.
+However, Bardenhagen (2002) showed that the original MPM formulation does not satisfy the energy conservation explicitly.
+It was found that the energy conservation in MPM is strongly
+dependent on the two algorithms which are used to update the stress at material points.</p>
+</section>
+<section id="referece">
+<h2>Referece<a class="headerlink" href="#referece" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Nguyen, V. P., de Vaucorbeil, A., &amp; Bordas, S. (2023). The Material Point Method: Theory, Implementations, and Applications. Springer. <a class="reference external" href="https://doi.org/10.1007/978-3-031-24070-6">https://doi.org/10.1007/978-3-031-24070-6</a></p></li>
+<li><p><a class="reference external" href="https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body">https://www.geoelements.org/LearnMPM/mpm.html#motion-of-deformable-body</a></p></li>
+<li><p>Fern, J., Rohe, A., Soga, K., &amp; Alonso, E. (2019). The material point method for geotechnical engineering: a practical guide. CRC Press.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Overview of Material Point Method</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="deformation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Description of deformation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strong-form">Strong form</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weak-form-and-spatial-discretisation">Weak form and spatial discretisation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-integration-and-numerical-implementation">Time integration and numerical implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conservation-properties">Conservation properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referece">Referece</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yongjin Choi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

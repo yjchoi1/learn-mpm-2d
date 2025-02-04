@@ -1,9 +1,13 @@
 # Learn MPM 2D with Python
 > Yongjin Choi
 
-This repository provides hands-on practice for simple 2D material point method (MPM) code using Python jupyter notebook.
+This repository provides a general background of material point method (MPM)and hands-on practice for simple 2D material point method (MPM) code using Python jupyter notebook. At the end of the course, you will be able to implement following two simulations with MPM:
 
-<img src="book/figs/sim_config.png" alt="sim config" style="width: 70%;"/>
+**Elastic ball collision:**
+![practice-1](figs/sim_config.png)
+
+**Granular column collapse:**
+![practice-2](figs/granular_column_collapse.png)
 
 ## Prerequisite
 * This practice uses numpy library in python. 
@@ -24,3 +28,5 @@ pip install -r ./book/requirements.txt
 * https://github.com/geoelements/LearnMPM
 * Nguyen, V. P., de Vaucorbeil, A., & Bordas, S. (2023). The material point method. Cham: Springer International Publishing.
 * https://github.com/vinhphunguyen/mpmat?tab=readme-ov-file
+
+## Acknowledgement

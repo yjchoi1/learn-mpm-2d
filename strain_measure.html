@@ -66,7 +66,7 @@
     <link rel="canonical" href="/learn-mpm-2d/strain_measure.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Practice" href="practice.html" />
+    <link rel="next" title="MPM Updates" href="mpm_update.html" />
     <link rel="prev" title="Description of deformation" href="deformation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -174,8 +174,10 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="governing_equations.html">Governing equations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Stress and strain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mpm_update.html">MPM Updates</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="practice.html">Practice</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -428,18 +430,21 @@
 </section>
 <section id="numerical-integration-of-deformation-gradient">
 <h3>Numerical integration of deformation gradient<a class="headerlink" href="#numerical-integration-of-deformation-gradient" title="Link to this heading">#</a></h3>
-<p>To numerically compute <span class="math notranslate nohighlight">\( \mathbf{F} \)</span> over a discrete time step <span class="math notranslate nohighlight">\( \Delta t \)</span>, we use the forward Euler approximation for <span class="math notranslate nohighlight">\( \dot{\mathbf{F}} \)</span>:
-$<span class="math notranslate nohighlight">\(
+<p>To numerically compute <span class="math notranslate nohighlight">\( \mathbf{F} \)</span> over a discrete time step <span class="math notranslate nohighlight">\( \Delta t \)</span>, we use the forward Euler approximation for <span class="math notranslate nohighlight">\( \dot{\mathbf{F}} \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t + \dot{\mathbf{F}} \cdot \Delta t
-\)</span>$</p>
-<p>Substituting <span class="math notranslate nohighlight">\( \dot{\mathbf{F}} = \mathbf{L}_p \cdot \mathbf{F}_p^t \)</span>:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>Substituting <span class="math notranslate nohighlight">\( \dot{\mathbf{F}} = \mathbf{L}_p \cdot \mathbf{F}_p^t \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t + \left( \mathbf{L}_p \cdot \mathbf{F}_p^t \right) \cdot \Delta t
-\)</span>$</p>
-<p>Factoring <span class="math notranslate nohighlight">\( \mathbf{F}_p^t \)</span>:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>Factoring <span class="math notranslate nohighlight">\( \mathbf{F}_p^t \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t \cdot \left( \mathbf{I} + \mathbf{L}_p \cdot \Delta t \right)
-\)</span>$</p>
+\]</div>
 </section>
 <section id="rate-of-deformation-tensor-strain-rate-tensor">
 <h3>Rate of deformation tensor (strain rate tensor)<a class="headerlink" href="#rate-of-deformation-tensor-strain-rate-tensor" title="Link to this heading">#</a></h3>
@@ -471,10 +476,11 @@ $<span class="math notranslate nohighlight">\(
 </section>
 <section id="stress-increment">
 <h3>Stress increment<a class="headerlink" href="#stress-increment" title="Link to this heading">#</a></h3>
-<p>Stress increments are obtained from the strain increments. It is computed using the material’s constitutive model:
-$<span class="math notranslate nohighlight">\(
+<p>Stress increments are obtained from the strain increments. It is computed using the material’s constitutive model:</p>
+<div class="math notranslate nohighlight">
+\[
 \Delta \boldsymbol{\sigma}_p = f (\boldsymbol{\sigma}_p, \Delta \boldsymbol{\varepsilon}_p, \boldsymbol{\theta})
-\)</span>$</p>
+\]</div>
 </section>
 </section>
 </section>
@@ -519,11 +525,11 @@ $<span class="math notranslate nohighlight">\(
       </div>
     </a>
     <a class="right-next"
-       href="practice.html"
+       href="mpm_update.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Practice</p>
+        <p class="prev-next-title">MPM Updates</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
