@@ -1,3 +1,4 @@
 .pptx
 *_build*
 *results_vtk*
+*_pycache_*

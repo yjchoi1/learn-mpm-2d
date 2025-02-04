@@ -7,8 +7,10 @@ chapters:
 - file: mpm-background
   sections:
     - file: introduction
+    - file: governing_equations
     - file: deformation
     - file: strain_measure
+    - file: mpm_update
 - file: practice
   sections:
     - file: mpm2d-elastic-ball

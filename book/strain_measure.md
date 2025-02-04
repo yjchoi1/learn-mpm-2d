@@ -29,16 +29,19 @@ $$
 ### Numerical integration of deformation gradient
 
 To numerically compute $ \mathbf{F} $ over a discrete time step $ \Delta t $, we use the forward Euler approximation for $ \dot{\mathbf{F}} $:
+
 $$
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t + \dot{\mathbf{F}} \cdot \Delta t
 $$
 
 Substituting $ \dot{\mathbf{F}} = \mathbf{L}_p \cdot \mathbf{F}_p^t $:
+
 $$
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t + \left( \mathbf{L}_p \cdot \mathbf{F}_p^t \right) \cdot \Delta t
 $$
 
 Factoring $ \mathbf{F}_p^t $:
+
 $$
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t \cdot \left( \mathbf{I} + \mathbf{L}_p \cdot \Delta t \right)
 $$
@@ -75,6 +78,7 @@ where $ \mathbf{L}_p $ is the velocity gradient.
 
 ### Stress increment
 Stress increments are obtained from the strain increments. It is computed using the material's constitutive model:
+
 $$
 \Delta \boldsymbol{\sigma}_p = f (\boldsymbol{\sigma}_p, \Delta \boldsymbol{\varepsilon}_p, \boldsymbol{\theta})
 $$
