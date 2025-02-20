@@ -5,7 +5,7 @@
 Below is the USL (Update Stress Last) Material Point Method (MPM) scheme with explanations for each step. 
 
 
-### 1. **Initialization**
+### 1. Initialization
 
 1. **Set up the background mesh (i.e., grid), set time $ t = 0 $.**
 
@@ -24,11 +24,11 @@ Below is the USL (Update Stress Last) Material Point Method (MPM) scheme with ex
 
 
 
-### 2. **Time-Stepping Loop**
+### 2. Time-Stepping Loop
 
 The simulation advances in time steps $\Delta t$ until a final time $ t_f $ is reached.
 
-#### **Step 2.1: Reset Grid Quantities**
+#### Step 2.1: Reset Grid Quantities
 
 - **What is done:**  
   At the start of each time step, for every grid node $ I $, the following quantities are reset to zero:
@@ -43,7 +43,7 @@ The simulation advances in time steps $\Delta t$ until a final time $ t_f $ is r
 
 
 
-#### **Step 2.2: Mapping from Particles to Nodes (P2G)**
+#### Step 2.2: Mapping from Particles to Nodes (P2G)
 
 The Particle-to-Grid (P2G) step transfers particle information to the grid nodes using shape functions, denoted by $ \phi_I(x^t_p) $. The shape functions determine how much influence a particle has on a given node based on its location.
 
@@ -94,7 +94,7 @@ The Particle-to-Grid (P2G) step transfers particle information to the grid nodes
 
 
 
-#### **Step 2.3: Update the Momenta**
+#### Step 2.3: Update the Momenta
 
 - **Operation:**
 
@@ -107,7 +107,7 @@ The Particle-to-Grid (P2G) step transfers particle information to the grid nodes
 
 
 
-#### **Step 2.4: Fix Dirichlet Nodes**
+#### Step 2.4: Fix Dirichlet Nodes
 
 - **Operation:**
 
@@ -122,7 +122,7 @@ The Particle-to-Grid (P2G) step transfers particle information to the grid nodes
 
 
 
-#### **Step 2.5: Update Particles (G2P)**
+#### Step 2.5: Update Particles (G2P)
 
 After computing grid nodal quantities, the updated information is transferred back to the particles in the Grid-to-Particle (G2P) step.
 
@@ -217,7 +217,7 @@ After computing grid nodal quantities, the updated information is transferred ba
 
 
 
-#### **Step 2.6: Advance Time**
+#### Step 2.6: Advance Time
 
 - **Operation:**
 
@@ -231,7 +231,7 @@ After computing grid nodal quantities, the updated information is transferred ba
 ### End of computation cycle
 
 
-### **Summary**
+### Summary
 
 - **Mappings:**  
   The algorithm uses two mappings:

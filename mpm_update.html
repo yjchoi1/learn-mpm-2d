@@ -63,7 +63,6 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'mpm_update';</script>
-    <link rel="canonical" href="/learn-mpm-2d/mpm_update.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Practice" href="practice.html" />
@@ -174,6 +173,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lagrangian_eulerian.html">Lagrangian vs. Eulerian Descriptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="governing_equations.html">Governing equations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
@@ -231,53 +231,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmpm_update.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -378,18 +331,18 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-stress-last-usl-scheme">Update stress last (USL) scheme</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">1. <strong>Initialization</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-stepping-loop">2. <strong>Time-Stepping Loop</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-1-reset-grid-quantities"><strong>Step 2.1: Reset Grid Quantities</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-2-mapping-from-particles-to-nodes-p2g"><strong>Step 2.2: Mapping from Particles to Nodes (P2G)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-3-update-the-momenta"><strong>Step 2.3: Update the Momenta</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-4-fix-dirichlet-nodes"><strong>Step 2.4: Fix Dirichlet Nodes</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-5-update-particles-g2p"><strong>Step 2.5: Update Particles (G2P)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-6-advance-time"><strong>Step 2.6: Advance Time</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">1. Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-stepping-loop">2. Time-Stepping Loop</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-1-reset-grid-quantities">Step 2.1: Reset Grid Quantities</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-2-mapping-from-particles-to-nodes-p2g">Step 2.2: Mapping from Particles to Nodes (P2G)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-3-update-the-momenta">Step 2.3: Update the Momenta</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-4-fix-dirichlet-nodes">Step 2.4: Fix Dirichlet Nodes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-5-update-particles-g2p">Step 2.5: Update Particles (G2P)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-6-advance-time">Step 2.6: Advance Time</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-computation-cycle">End of computation cycle</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary"><strong>Summary</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
 </li>
 </ul>
@@ -409,7 +362,7 @@
 <h2>Update stress last (USL) scheme<a class="headerlink" href="#update-stress-last-usl-scheme" title="Link to this heading">#</a></h2>
 <p>Below is the USL (Update Stress Last) Material Point Method (MPM) scheme with explanations for each step.</p>
 <section id="initialization">
-<h3>1. <strong>Initialization</strong><a class="headerlink" href="#initialization" title="Link to this heading">#</a></h3>
+<h3>1. Initialization<a class="headerlink" href="#initialization" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p><strong>Set up the background mesh (i.e., grid), set time <span class="math notranslate nohighlight">\( t = 0 \)</span>.</strong></p>
 <p>A fixed grid is established over the computational domain. Although the grid itself does not deform, it serves as a temporary computational structure to evaluate forces and accelerations. The simulation time is initialized.</p>
@@ -429,10 +382,10 @@
 </ol>
 </section>
 <section id="time-stepping-loop">
-<h3>2. <strong>Time-Stepping Loop</strong><a class="headerlink" href="#time-stepping-loop" title="Link to this heading">#</a></h3>
+<h3>2. Time-Stepping Loop<a class="headerlink" href="#time-stepping-loop" title="Link to this heading">#</a></h3>
 <p>The simulation advances in time steps <span class="math notranslate nohighlight">\(\Delta t\)</span> until a final time <span class="math notranslate nohighlight">\( t_f \)</span> is reached.</p>
 <section id="step-2-1-reset-grid-quantities">
-<h4><strong>Step 2.1: Reset Grid Quantities</strong><a class="headerlink" href="#step-2-1-reset-grid-quantities" title="Link to this heading">#</a></h4>
+<h4>Step 2.1: Reset Grid Quantities<a class="headerlink" href="#step-2-1-reset-grid-quantities" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>What is done:</strong><br />
 At the start of each time step, for every grid node <span class="math notranslate nohighlight">\( I \)</span>, the following quantities are reset to zero:</p>
@@ -449,7 +402,7 @@ Each time step involves re-computing the nodal quantities from scratch based on 
 </ul>
 </section>
 <section id="step-2-2-mapping-from-particles-to-nodes-p2g">
-<h4><strong>Step 2.2: Mapping from Particles to Nodes (P2G)</strong><a class="headerlink" href="#step-2-2-mapping-from-particles-to-nodes-p2g" title="Link to this heading">#</a></h4>
+<h4>Step 2.2: Mapping from Particles to Nodes (P2G)<a class="headerlink" href="#step-2-2-mapping-from-particles-to-nodes-p2g" title="Link to this heading">#</a></h4>
 <p>The Particle-to-Grid (P2G) step transfers particle information to the grid nodes using shape functions, denoted by <span class="math notranslate nohighlight">\( \phi_I(x^t_p) \)</span>. The shape functions determine how much influence a particle has on a given node based on its location.</p>
 <ol class="arabic">
 <li><p><strong>Compute nodal mass</strong></p>
@@ -505,7 +458,7 @@ The total force at each grid node is simply the sum of the external and internal
 </ol>
 </section>
 <section id="step-2-3-update-the-momenta">
-<h4><strong>Step 2.3: Update the Momenta</strong><a class="headerlink" href="#step-2-3-update-the-momenta" title="Link to this heading">#</a></h4>
+<h4>Step 2.3: Update the Momenta<a class="headerlink" href="#step-2-3-update-the-momenta" title="Link to this heading">#</a></h4>
 <ul>
 <li><p><strong>Operation:</strong></p>
 <div class="math notranslate nohighlight">
@@ -518,7 +471,7 @@ This is a direct application of Newton’s second law (force equals the rate of 
 </ul>
 </section>
 <section id="step-2-4-fix-dirichlet-nodes">
-<h4><strong>Step 2.4: Fix Dirichlet Nodes</strong><a class="headerlink" href="#step-2-4-fix-dirichlet-nodes" title="Link to this heading">#</a></h4>
+<h4>Step 2.4: Fix Dirichlet Nodes<a class="headerlink" href="#step-2-4-fix-dirichlet-nodes" title="Link to this heading">#</a></h4>
 <ul>
 <li><p><strong>Operation:</strong></p>
 <p>For nodes with prescribed (Dirichlet) boundary conditions, set</p>
@@ -532,7 +485,7 @@ Certain boundaries in the physical problem might be fixed (e.g., a wall or a cla
 </ul>
 </section>
 <section id="step-2-5-update-particles-g2p">
-<h4><strong>Step 2.5: Update Particles (G2P)</strong><a class="headerlink" href="#step-2-5-update-particles-g2p" title="Link to this heading">#</a></h4>
+<h4>Step 2.5: Update Particles (G2P)<a class="headerlink" href="#step-2-5-update-particles-g2p" title="Link to this heading">#</a></h4>
 <p>After computing grid nodal quantities, the updated information is transferred back to the particles in the Grid-to-Particle (G2P) step.</p>
 <ol class="arabic">
 <li><p><strong>Get nodal velocities</strong></p>
@@ -640,7 +593,7 @@ Finally, the stress in each particle is updated. There are typically two approac
 </ol>
 </section>
 <section id="step-2-6-advance-time">
-<h4><strong>Step 2.6: Advance Time</strong><a class="headerlink" href="#step-2-6-advance-time" title="Link to this heading">#</a></h4>
+<h4>Step 2.6: Advance Time<a class="headerlink" href="#step-2-6-advance-time" title="Link to this heading">#</a></h4>
 <ul>
 <li><p><strong>Operation:</strong></p>
 <div class="math notranslate nohighlight">
@@ -657,7 +610,7 @@ After completing the updates for the current time step, the simulation time is a
 <h3>End of computation cycle<a class="headerlink" href="#end-of-computation-cycle" title="Link to this heading">#</a></h3>
 </section>
 <section id="summary">
-<h3><strong>Summary</strong><a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
+<h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Mappings:</strong><br />
 The algorithm uses two mappings:</p>
@@ -741,18 +694,18 @@ In the USL formulation, stress is updated after the particle’s kinematic quant
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-stress-last-usl-scheme">Update stress last (USL) scheme</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">1. <strong>Initialization</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-stepping-loop">2. <strong>Time-Stepping Loop</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-1-reset-grid-quantities"><strong>Step 2.1: Reset Grid Quantities</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-2-mapping-from-particles-to-nodes-p2g"><strong>Step 2.2: Mapping from Particles to Nodes (P2G)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-3-update-the-momenta"><strong>Step 2.3: Update the Momenta</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-4-fix-dirichlet-nodes"><strong>Step 2.4: Fix Dirichlet Nodes</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-5-update-particles-g2p"><strong>Step 2.5: Update Particles (G2P)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-6-advance-time"><strong>Step 2.6: Advance Time</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialization">1. Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-stepping-loop">2. Time-Stepping Loop</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-1-reset-grid-quantities">Step 2.1: Reset Grid Quantities</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-2-mapping-from-particles-to-nodes-p2g">Step 2.2: Mapping from Particles to Nodes (P2G)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-3-update-the-momenta">Step 2.3: Update the Momenta</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-4-fix-dirichlet-nodes">Step 2.4: Fix Dirichlet Nodes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-5-update-particles-g2p">Step 2.5: Update Particles (G2P)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-6-advance-time">Step 2.6: Advance Time</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-computation-cycle">End of computation cycle</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary"><strong>Summary</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
 </li>
 </ul>

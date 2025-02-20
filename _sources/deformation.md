@@ -1,34 +1,34 @@
 # Description of deformation
 
-In continuum mechanics, a body $\mathcal{B}$ is modeled as consisting of an infinite collection of material points, each possessing specific mechanical properties. The initial position of a material point in the undeformed configuration is represented by the vector $\mathbf{X}$, defined relative to a chosen coordinate basis. This vector, $\mathbf{X}$, is referred to as the material or Lagrangian coordinate. In contrast, the position of the same point in the deformed configuration is denoted by $\mathbf{x}$, known as the spatial or Eulerian coordinate.
+Continuum mechanics views a body $\mathcal{B}$ as a continuous medium made up of material points, with each point having distinct mechanical characteristics. When describing the position of these points, we use two different coordinate systems. In the body's original, undeformed state, we locate points using the material (or Lagrangian) coordinate vector $\mathbf{X}$. After deformation occurs, we describe the new positions using the spatial (or Eulerian) coordinate vector $\mathbf{x}$.
 
 ![algorithm](figs/deformation.png)
 *Motion of a deformable body in continuum mechanics*
 
-The motion or deformation of a solid is characterized by a mapping function $\boldsymbol{\varphi}(\mathbf{X}, t)$, which relates the spatial coordinates to the material coordinates as follows:
+To mathematically describe how a body moves and deforms over time, we use a mapping function $\boldsymbol{\phi}(\mathbf{X}, t)$. This function establishes the relationship between where a point started ($\mathbf{X}$) and where it ends up ($\mathbf{x}$) at any given time:
 
 $$
-\mathbf{x} = \boldsymbol{\varphi}(\mathbf{X}, t)
+\mathbf{x} = \boldsymbol{\phi}(\mathbf{X}, t)
 $$
 
-Key kinematic fields, such as displacement, velocity, and acceleration, describe the motion of a body. The displacement of a material point $\mathbf{X}$, denoted by $\mathbf{u}(\mathbf{X}, t)$, is the difference between the current position $\boldsymbol{\varphi}(\mathbf{X}, t)$ and the initial position $\boldsymbol{\varphi}(\mathbf{X}, 0)$, expressed as:
+The motion of any material point can be described through displacement, velocity, and acceleration. First, the displacement vector $\mathbf{u}(\mathbf{X}, t)$ measures how far a point has moved from its initial position. We can calculate this as the difference between its current and original positions:
 
 $$
-\mathbf{u}(\mathbf{X}, t) := \boldsymbol{\varphi}(\mathbf{X}, t) - \boldsymbol{\varphi}(\mathbf{X}, 0) = \mathbf{x} - \mathbf{X}
+\mathbf{u}(\mathbf{X}, t) := \boldsymbol{\phi}(\mathbf{X}, t) - \boldsymbol{\phi}(\mathbf{X}, 0) = \mathbf{x} - \mathbf{X}
 $$
 
-The velocity of a material point $\mathbf{X}$, denoted by $\mathbf{v}(\mathbf{X}, t)$, is defined as the time derivative of its position:
+Velocity $\mathbf{v}(\mathbf{X}, t)$ represents how quickly a point's position changes with time. Mathematically, it's expressed as the time derivative of the mapping function:
 
 $$
-\mathbf{v}(\mathbf{X}, t) := \frac{\partial \boldsymbol{\varphi}(\mathbf{X}, t)}{\partial t}
+\mathbf{v}(\mathbf{X}, t) := \frac{\partial \boldsymbol{\phi}(\mathbf{X}, t)}{\partial t}
 $$
 
-This velocity field corresponds to the Lagrangian description. While a Eulerian form of the velocity field exists, it is not covered here as the Material Point Method (MPM) adopts a Lagrangian framework.
+This is Lagrangian velocity field. Note that while we could describe velocity from both Lagrangian and Eulerian perspectives, we focus on the Lagrangian description since it aligns with the Material Point Method's (MPM) approach.
 
-The acceleration of a material point $\mathbf{X}$, denoted by $\mathbf{a}(\mathbf{X}, t)$, is the time derivative of the velocity or, equivalently, the second time derivative of the position function:
+Finally, acceleration $\mathbf{a}(\mathbf{X}, t)$ describes the rate of change of velocity, or equivalently, the second time derivative of position:
 
 $$
-\mathbf{a}(\mathbf{X}, t) := \frac{\partial \mathbf{v}(\mathbf{X}, t)}{\partial t} = \frac{\partial^2 \boldsymbol{\varphi}(\mathbf{X}, t)}{\partial t^2}
+\mathbf{a}(\mathbf{X}, t) := \frac{\partial \mathbf{v}(\mathbf{X}, t)}{\partial t} = \frac{\partial^2 \boldsymbol{\phi}(\mathbf{X}, t)}{\partial t^2}
 $$
 
 

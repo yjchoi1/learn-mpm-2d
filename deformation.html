@@ -63,7 +63,6 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'deformation';</script>
-    <link rel="canonical" href="/learn-mpm-2d/deformation.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Stress and strain" href="strain_measure.html" />
@@ -174,6 +173,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lagrangian_eulerian.html">Lagrangian vs. Eulerian Descriptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="governing_equations.html">Governing equations</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Description of deformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
@@ -231,53 +231,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fdeformation.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -391,29 +344,29 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="description-of-deformation">
 <h1>Description of deformation<a class="headerlink" href="#description-of-deformation" title="Link to this heading">#</a></h1>
-<p>In continuum mechanics, a body <span class="math notranslate nohighlight">\(\mathcal{B}\)</span> is modeled as consisting of an infinite collection of material points, each possessing specific mechanical properties. The initial position of a material point in the undeformed configuration is represented by the vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, defined relative to a chosen coordinate basis. This vector, <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, is referred to as the material or Lagrangian coordinate. In contrast, the position of the same point in the deformed configuration is denoted by <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, known as the spatial or Eulerian coordinate.</p>
+<p>Continuum mechanics views a body <span class="math notranslate nohighlight">\(\mathcal{B}\)</span> as a continuous medium made up of material points, with each point having distinct mechanical characteristics. When describing the position of these points, we use two different coordinate systems. In the body’s original, undeformed state, we locate points using the material (or Lagrangian) coordinate vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>. After deformation occurs, we describe the new positions using the spatial (or Eulerian) coordinate vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
 <p><img alt="algorithm" src="_images/deformation.png" />
 <em>Motion of a deformable body in continuum mechanics</em></p>
-<p>The motion or deformation of a solid is characterized by a mapping function <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}(\mathbf{X}, t)\)</span>, which relates the spatial coordinates to the material coordinates as follows:</p>
+<p>To mathematically describe how a body moves and deforms over time, we use a mapping function <span class="math notranslate nohighlight">\(\boldsymbol{\phi}(\mathbf{X}, t)\)</span>. This function establishes the relationship between where a point started (<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>) and where it ends up (<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>) at any given time:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{x} = \boldsymbol{\varphi}(\mathbf{X}, t)
+\mathbf{x} = \boldsymbol{\phi}(\mathbf{X}, t)
 \]</div>
-<p>Key kinematic fields, such as displacement, velocity, and acceleration, describe the motion of a body. The displacement of a material point <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, denoted by <span class="math notranslate nohighlight">\(\mathbf{u}(\mathbf{X}, t)\)</span>, is the difference between the current position <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}(\mathbf{X}, t)\)</span> and the initial position <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}(\mathbf{X}, 0)\)</span>, expressed as:</p>
+<p>The motion of any material point can be described through displacement, velocity, and acceleration. First, the displacement vector <span class="math notranslate nohighlight">\(\mathbf{u}(\mathbf{X}, t)\)</span> measures how far a point has moved from its initial position. We can calculate this as the difference between its current and original positions:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{u}(\mathbf{X}, t) := \boldsymbol{\varphi}(\mathbf{X}, t) - \boldsymbol{\varphi}(\mathbf{X}, 0) = \mathbf{x} - \mathbf{X}
+\mathbf{u}(\mathbf{X}, t) := \boldsymbol{\phi}(\mathbf{X}, t) - \boldsymbol{\phi}(\mathbf{X}, 0) = \mathbf{x} - \mathbf{X}
 \]</div>
-<p>The velocity of a material point <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, denoted by <span class="math notranslate nohighlight">\(\mathbf{v}(\mathbf{X}, t)\)</span>, is defined as the time derivative of its position:</p>
+<p>Velocity <span class="math notranslate nohighlight">\(\mathbf{v}(\mathbf{X}, t)\)</span> represents how quickly a point’s position changes with time. Mathematically, it’s expressed as the time derivative of the mapping function:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{v}(\mathbf{X}, t) := \frac{\partial \boldsymbol{\varphi}(\mathbf{X}, t)}{\partial t}
+\mathbf{v}(\mathbf{X}, t) := \frac{\partial \boldsymbol{\phi}(\mathbf{X}, t)}{\partial t}
 \]</div>
-<p>This velocity field corresponds to the Lagrangian description. While a Eulerian form of the velocity field exists, it is not covered here as the Material Point Method (MPM) adopts a Lagrangian framework.</p>
-<p>The acceleration of a material point <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, denoted by <span class="math notranslate nohighlight">\(\mathbf{a}(\mathbf{X}, t)\)</span>, is the time derivative of the velocity or, equivalently, the second time derivative of the position function:</p>
+<p>This is Lagrangian velocity field. Note that while we could describe velocity from both Lagrangian and Eulerian perspectives, we focus on the Lagrangian description since it aligns with the Material Point Method’s (MPM) approach.</p>
+<p>Finally, acceleration <span class="math notranslate nohighlight">\(\mathbf{a}(\mathbf{X}, t)\)</span> describes the rate of change of velocity, or equivalently, the second time derivative of position:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{a}(\mathbf{X}, t) := \frac{\partial \mathbf{v}(\mathbf{X}, t)}{\partial t} = \frac{\partial^2 \boldsymbol{\varphi}(\mathbf{X}, t)}{\partial t^2}
+\mathbf{a}(\mathbf{X}, t) := \frac{\partial \mathbf{v}(\mathbf{X}, t)}{\partial t} = \frac{\partial^2 \boldsymbol{\phi}(\mathbf{X}, t)}{\partial t^2}
 \]</div>
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>

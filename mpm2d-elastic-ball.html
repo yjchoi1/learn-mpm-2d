@@ -63,7 +63,6 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'mpm2d-elastic-ball';</script>
-    <link rel="canonical" href="/learn-mpm-2d/mpm2d-elastic-ball.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Practice-2: granular column collapse" href="mpm2d-column-collapse.html" />
@@ -174,6 +173,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="mpm-background.html">MPM background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Overview of Material Point Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lagrangian_eulerian.html">Lagrangian vs. Eulerian Descriptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="governing_equations.html">Governing equations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="deformation.html">Description of deformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="strain_measure.html">Stress and strain</a></li>
@@ -256,53 +256,6 @@
     <img alt="Colab logo" src="_static/images/logo_colab.png">
   </span>
 <span class="btn__text-container">Colab</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/yjchoi1/learn-mpm-2d/issues/new?title=Issue%20on%20page%20%2Fmpm2d-elastic-ball.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
 </a>
 </li>
       
@@ -796,20 +749,21 @@ $$</p>
 <hr class="docutils" />
 <p><em><strong>Iteration Over Active Elements</strong></em></p>
 <p>The first step iterates over <strong>active elements</strong>, identified as elements containing particles. For each element:</p>
-<ul>
+<ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">node_ids</span></code></strong>: Retrieves the indices of the nodes associated with the element.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">node_coords</span></code></strong>: Retrieves the spatial coordinates of these nodes:</p>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">node_coords</span></code></strong>: Retrieves the spatial coordinates of these nodes:</p></li>
+</ul>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}
-  \text{node\_coords} = \\\begin{split}  \begin{bmatrix}
-  x_1 &amp; y_1 \\
-  x_2 &amp; y_2 \\
-  x_3 &amp; y_3 \\
-  x_4 &amp; y_4
-  \end{bmatrix}
-  \end{split}\end{aligned}\end{align} \]</div>
+\[\begin{split}
+\text{node coords} = \begin{bmatrix}
+x_1 &amp; y_1 \\
+x_2 &amp; y_2 \\
+x_3 &amp; y_3 \\
+x_4 &amp; y_4
+\end{bmatrix}
+\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\( (x_i, y_i) \)</span> are the global coordinates of the <span class="math notranslate nohighlight">\( i \)</span>-th node of the element.</p>
-</li>
+<ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">material_points</span></code></strong>: Identifies the particles currently within the element.</p></li>
 </ul>
 <hr class="docutils" />
@@ -817,15 +771,15 @@ $$</p>
 <p>For each particle <span class="math notranslate nohighlight">\( p \)</span> in the element, its global coordinates <span class="math notranslate nohighlight">\((x_p, y_p)\)</span> are converted into the element’s local coordinate system <span class="math notranslate nohighlight">\((\xi, \eta)\)</span>.</p>
 <p>Formula for Local Coordinates:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}
+\[\begin{split}
 \begin{bmatrix}
 \xi \\
 \eta
-\end{bmatrix}\end{split}\\=\\\begin{split}\begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
 \frac{2x_p - (x_1 + x_2)}{\Delta x} \\
 \frac{2y_p - (y_1 + y_3)}{\Delta y}
 \end{bmatrix}
-\end{split}\end{aligned}\end{align} \]</div>
+\end{split}\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( (x_p, y_p) \)</span>: Global coordinates of the particle.</p></li>
@@ -836,50 +790,54 @@ $$</p>
 <hr class="docutils" />
 <p><em><strong>Shape Functions and Their Derivatives</strong></em></p>
 <p>The <strong>shape functions</strong> <span class="math notranslate nohighlight">\( N \)</span> and their derivatives <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial \xi} \)</span> and <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial \eta} \)</span> are evaluated at the particle’s local coordinates <span class="math notranslate nohighlight">\((\xi, \eta)\)</span>. For a quadrilateral element (Q4), the shape function matrix <span class="math notranslate nohighlight">\( N(\xi, \eta) \)</span> and its derivative matrix <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial (\xi, \eta)} \)</span> are given as:</p>
-<p>Shape Function Matrix:
-$<span class="math notranslate nohighlight">\(
-N(\xi, \eta) = 
-\begin{bmatrix}
+<p>Shape Function Matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+N(\xi, \eta) = \begin{bmatrix}
 \frac{(1-\xi)(1-\eta)}{4} \\
 \frac{(1+\xi)(1-\eta)}{4} \\
 \frac{(1+\xi)(1+\eta)}{4} \\
 \frac{(1-\xi)(1+\eta)}{4}
 \end{bmatrix}
-\)</span>$</p>
+\end{split}\]</div>
 <p>Derivative Matrix with Respect to <span class="math notranslate nohighlight">\( (\xi, \eta) \)</span>:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}
-\frac{\partial N}{\partial (\xi, \eta)} =\\\begin{split}\begin{bmatrix}
+\[\begin{split}
+\frac{\partial N}{\partial (\xi, \eta)} = \begin{bmatrix}
 \frac{\partial N_1}{\partial \xi} &amp; \frac{\partial N_1}{\partial \eta} \\
 \frac{\partial N_2}{\partial \xi} &amp; \frac{\partial N_2}{\partial \eta} \\
 \frac{\partial N_3}{\partial \xi} &amp; \frac{\partial N_3}{\partial \eta} \\
 \frac{\partial N_4}{\partial \xi} &amp; \frac{\partial N_4}{\partial \eta}
-\end{bmatrix}\end{split}\\=\\\begin{split}\frac{1}{4}
+\end{bmatrix} = \frac{1}{4}
 \begin{bmatrix}
 \eta - 1 &amp; \xi - 1 \\
 1 - \eta &amp; -1 - \xi \\
 \eta + 1 &amp; \xi + 1 \\
 -1 - \eta &amp; 1 - \xi
-\end{bmatrix}\end{split}\end{aligned}\end{align} \]</div>
+\end{bmatrix}
+\end{split}\]</div>
 <hr class="docutils" />
 <p><em><strong>Jacobian Matrix</strong></em></p>
 <p>The <strong>Jacobian matrix</strong> <span class="math notranslate nohighlight">\( J \)</span> maps derivatives in the local coordinate space <span class="math notranslate nohighlight">\((\xi, \eta)\)</span> to the global coordinate space <span class="math notranslate nohighlight">\((x, y)\)</span>. It is computed as:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}J =
+\[\begin{split}
+J =
 \begin{bmatrix}
 \frac{\partial x}{\partial \xi} &amp; \frac{\partial y}{\partial \xi} \\
 \frac{\partial x}{\partial \eta} &amp; \frac{\partial y}{\partial \eta}
-\end{bmatrix}\end{split}\\=\\\text{node\_coords}^T \cdot \frac{\partial N}{\partial (\xi, \eta)},\end{aligned}\end{align} \]</div>
+\end{bmatrix} = \text{node coords}^T \cdot \frac{\partial N}{\partial (\xi, \eta)},
+\end{split}\]</div>
 <p>where:</p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\( \text{node\_coords} \)</span> is the <span class="math notranslate nohighlight">\( 4 \times 2 \)</span> matrix of node coordinates:</p>
+<li><p><span class="math notranslate nohighlight">\( \text{node coords} \)</span> is the <span class="math notranslate nohighlight">\( 4 \times 2 \)</span> matrix of node coordinates:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}  \text{node\_coords} =\\\begin{split}  \begin{bmatrix}
+\[\begin{split}  \text{node coords} = \begin{bmatrix}
   x_1 &amp; y_1 \\
   x_2 &amp; y_2 \\
   x_3 &amp; y_3 \\
   x_4 &amp; y_4
-  \end{bmatrix}\end{split}\end{aligned}\end{align} \]</div>
+  \end{bmatrix}
+  \end{split}\]</div>
 </li>
 </ul>
 <hr class="docutils" />
@@ -897,13 +855,13 @@ N(\xi, \eta) =
 \[\frac{\partial N}{\partial (x, y)} = \frac{\partial N}{\partial (\xi, \eta)} \cdot J^{-1}\]</div>
 <p>In matrix form:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}
-\frac{\partial N}{\partial (x, y)} =\\\begin{split}\begin{bmatrix}
+\[\begin{split}
+\frac{\partial N}{\partial (x, y)} = \begin{bmatrix}
 \frac{\partial N_1}{\partial x} &amp; \frac{\partial N_1}{\partial y} \\
 \frac{\partial N_2}{\partial x} &amp; \frac{\partial N_2}{\partial y} \\
 \frac{\partial N_3}{\partial x} &amp; \frac{\partial N_3}{\partial y} \\
 \frac{\partial N_4}{\partial x} &amp; \frac{\partial N_4}{\partial y}
-\end{bmatrix}\end{split}\end{aligned}\end{align} \]</div>
+\end{bmatrix}\end{split}\]</div>
 </section>
 <hr class="docutils" />
 <section id="update-the-momenta-and-impose-boundary-condition">
@@ -981,108 +939,119 @@ N(\xi, \eta) =
 </div>
 <p>This part of the code computes particle updates (velocity, position, stress, strain, deformation gradient, etc.) based on nodal values (forces and momenta) and redistributes updated stresses back to the nodes. Here’s the step-by-step explanation with relevant mathematical formulations:</p>
 <hr class="docutils" />
-<p><em><strong>Iterate Over Elements and Particles</strong></em>
-For each element <span class="math notranslate nohighlight">\( e \)</span>:</p>
+<p><em><strong>Iterate Over Elements and Particles</strong></em></p>
+<p>For each element <span class="math notranslate nohighlight">\( e \)</span>:</p>
 <ul class="simple">
 <li><p>Retrieve:</p>
 <ul>
-<li><p><strong>Node indices</strong>: <span class="math notranslate nohighlight">\( \text{node\_ids} = \{n_1, n_2, n_3, n_4\} \)</span>, representing the indices of the element’s nodes.</p></li>
-<li><p><strong>Node coordinates</strong>: <span class="math notranslate nohighlight">\( \text{node\_coords} \)</span>, the global positions of the nodes.</p></li>
-<li><p><strong>Particle IDs</strong>: <span class="math notranslate nohighlight">\( \text{material\_points} \)</span>, the IDs of the particles within the current element.</p></li>
+<li><p><strong>Node indices</strong>: <span class="math notranslate nohighlight">\( \text{node ids} = \{n_1, n_2, n_3, n_4\} \)</span>, representing the indices of the element’s nodes.</p></li>
+<li><p><strong>Node coordinates</strong>: <span class="math notranslate nohighlight">\( \text{node coords} \)</span>, the global positions of the nodes.</p></li>
+<li><p><strong>Particle IDs</strong>: <span class="math notranslate nohighlight">\( \text{material points} \)</span>, the IDs of the particles within the current element.</p></li>
 </ul>
 </li>
 </ul>
 <p>For each particle <span class="math notranslate nohighlight">\( p \)</span> within the element, we compute its updates as follows:</p>
 <hr class="docutils" />
-<p><em><strong>Convert Global to Local Coordinates</strong></em>
-The particle’s global position <span class="math notranslate nohighlight">\((x_p, y_p)\)</span> is transformed into the local coordinate system <span class="math notranslate nohighlight">\((\xi, \eta)\)</span> using:</p>
+<p><em><strong>Convert Global to Local Coordinates</strong></em></p>
+<p>The particle’s global position <span class="math notranslate nohighlight">\((x_p, y_p)\)</span> is transformed into the local coordinate system <span class="math notranslate nohighlight">\((\xi, \eta)\)</span> using:</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\begin{split}
+\[\begin{split}
 \begin{bmatrix}
 \xi \\
 \eta
-\end{bmatrix}\end{split}\\=\\\begin{split}\begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
 \frac{2x_p - (x_1 + x_2)}{\Delta x} \\
 \frac{2y_p - (y_1 + y_3)}{\Delta y}
 \end{bmatrix},
-\end{split}\end{aligned}\end{align} \]</div>
+\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\( \Delta x \)</span> and <span class="math notranslate nohighlight">\( \Delta y \)</span> are the element’s dimensions.</p>
 <hr class="docutils" />
 <p><em><strong>Compute Shape Functions and Their Gradients</strong></em></p>
-<ul class="simple">
+<ul>
 <li><p><strong>Shape functions <span class="math notranslate nohighlight">\( N(\xi, \eta) \)</span></strong>:
 The values of the shape functions at <span class="math notranslate nohighlight">\((\xi, \eta)\)</span> are interpolated to determine how particle quantities are distributed to nodes.</p></li>
 <li><p><strong>Gradients of Shape Functions</strong>:
-The derivatives of the shape functions with respect to global coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> are computed as:
-$<span class="math notranslate nohighlight">\(
-\frac{\partial N}{\partial (x, y)} = \frac{\partial N}{\partial (\xi, \eta)} \cdot J^{-1},
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> J $ is the Jacobian matrix.</p></li>
+The derivatives of the shape functions with respect to global coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> are computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+  \frac{\partial N}{\partial (x, y)} = \frac{\partial N}{\partial (\xi, \eta)} \cdot J^{-1},
+  \]</div>
+<p>where <span class="math notranslate nohighlight">\( J \)</span> is the Jacobian matrix.</p>
+</li>
 </ul>
 <hr class="docutils" />
-<p><em><strong>Update Particle Velocity and Position</strong></em>
-<strong>Particle Velocity Update</strong>:
-The velocity of the particle <span class="math notranslate nohighlight">\( \mathbf{v}_p \)</span> is updated using the nodal forces <span class="math notranslate nohighlight">\( \mathbf{f}_I \)</span>:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Update Particle Velocity and Position</strong></em></p>
+<p><strong>Particle Velocity Update</strong>:
+The velocity of the particle <span class="math notranslate nohighlight">\( \mathbf{v}_p \)</span> is updated using the nodal forces <span class="math notranslate nohighlight">\( \mathbf{f}_I \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{v}_p^{t+\Delta t} = \mathbf{v}_p^{t} + \Delta t \sum_{i} N_i(x_p) \frac{\mathbf{f}_i}{m_i}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> N_i(x_p) <span class="math notranslate nohighlight">\( is the shape function value, \)</span> \mathbf{f}_i = \text{nforce[node_id]} <span class="math notranslate nohighlight">\(, and \)</span> m_i = \text{nodal_masses[node_id]} $.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( N_i(x_p) \)</span> is the shape function value, <span class="math notranslate nohighlight">\( \mathbf{f}_i = \text{nforce[node id]} \)</span>, and <span class="math notranslate nohighlight">\( m_i = \text{nodal masses[node id]} \)</span>.</p>
 <p><strong>Particle Position Update</strong>:
-The particle position <span class="math notranslate nohighlight">\( \mathbf{x}_p \)</span> is updated using the nodal momentum <span class="math notranslate nohighlight">\( \mathbf{p}_I \)</span>:
-$<span class="math notranslate nohighlight">\(
+The particle position <span class="math notranslate nohighlight">\( \mathbf{x}_p \)</span> is updated using the nodal momentum <span class="math notranslate nohighlight">\( \mathbf{p}_I \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{x}_p^{t+\Delta t} = \mathbf{x}_p^{t} + \Delta t \sum_{i} N_i(x_p) \frac{\mathbf{p}_i}{m_i}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> \mathbf{p}_i = \text{nodal_momentums[node_id]} $.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{p}_i = \text{nodal momentums[node id]} \)</span>.</p>
 <hr class="docutils" />
-<p><em><strong>Compute Particle Velocity Gradient</strong></em>
-The velocity gradient at the particle is computed using:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Compute Particle Velocity Gradient</strong></em></p>
+<p>The velocity gradient at the particle is computed using:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{L}_p = \sum_i \mathbf{v}_I \frac{\partial N_i}{\partial (x, y)}
-\)</span>$
-where:</p>
+\]</div>
+<p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( \mathbf{v}_I = \frac{\mathbf{p}_i}{m_i} \)</span>: Velocity of node <span class="math notranslate nohighlight">\( i \)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\( \frac{\partial N_i}{\partial (x, y)} \)</span>: Gradient of the shape function.</p></li>
 </ul>
 <hr class="docutils" />
-<p><em><strong>Update Deformation Gradient</strong></em>
-The deformation gradient <span class="math notranslate nohighlight">\( \mathbf{F}_p \)</span> is updated using the velocity gradient:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Update Deformation Gradient</strong></em></p>
+<p>The deformation gradient <span class="math notranslate nohighlight">\( \mathbf{F}_p \)</span> is updated using the velocity gradient:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{F}_p^{t+\Delta t} = \mathbf{F}_p^t \cdot \left( \mathbf{I} + \mathbf{L}_p \cdot \Delta t \right)
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> \mathbf{I} $ is the identity matrix.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{I} \)</span> is the identity matrix.</p>
 <hr class="docutils" />
-<p><em><strong>Update Particle Volume</strong></em>
-The particle volume is updated using the determinant of the deformation gradient:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Update Particle Volume</strong></em></p>
+<p>The particle volume is updated using the determinant of the deformation gradient:</p>
+<div class="math notranslate nohighlight">
+\[
 V_p^{t+\Delta t} = \text{det}(\mathbf{F}_p^{t+\Delta t}) \cdot V_p^0
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> V_p^0 $ is the initial volume of the particle.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( V_p^0 \)</span> is the initial volume of the particle.</p>
 <hr class="docutils" />
-<p><em><strong>Compute Strain Increment</strong></em>
-The strain increment <span class="math notranslate nohighlight">\( \Delta \boldsymbol{\varepsilon}_p \)</span> is computed as:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Compute Strain Increment</strong></em></p>
+<p>The strain increment <span class="math notranslate nohighlight">\( \Delta \boldsymbol{\varepsilon}_p \)</span> is computed as:</p>
+<div class="math notranslate nohighlight">
+\[
 \Delta \boldsymbol{\varepsilon}_p = \Delta t \cdot \frac{1}{2} \left( \mathbf{L}_p + \mathbf{L}_p^T \right) = \Delta t \cdot \boldsymbol{D}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> \mathbf{L}_p $ is the velocity gradient.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{L}_p \)</span> is the velocity gradient.</p>
 <hr class="docutils" />
-<p><em><strong>Update Stress</strong></em>
-The stress increment is computed using the material’s constitutive model:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Update Stress</strong></em></p>
+<p>The stress increment is computed using the material’s constitutive model:</p>
+<div class="math notranslate nohighlight">
+\[
 \Delta \boldsymbol{\sigma}_p = f (\boldsymbol{\sigma}_p, \Delta \boldsymbol{\varepsilon}_p, \boldsymbol{\theta})
-\)</span>$</p>
+\]</div>
 <p>Where, <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is the model parameters.</p>
-<p>The updated stress is:
-$<span class="math notranslate nohighlight">\(
+<p>The updated stress is:</p>
+<div class="math notranslate nohighlight">
+\[
 \boldsymbol{\sigma}_p^{t+\Delta t} = \boldsymbol{\sigma}_p^t + \Delta \boldsymbol{\sigma}_p
-\)</span>$</p>
+\]</div>
 <hr class="docutils" />
-<p><em><strong>Map Stresses to Nodes</strong></em>
-Finally, stresses are interpolated back to the nodes:
-$<span class="math notranslate nohighlight">\(
+<p><em><strong>Map Stresses to Nodes</strong></em></p>
+<p>Finally, stresses are interpolated back to the nodes:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{s}_I = \mathbf{s}_I + N_i(x_p) \cdot \boldsymbol{\sigma}_p
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span> N_i(x_p) $ is the shape function value at the particle position.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\( N_i(x_p) \)</span> is the shape function value at the particle position.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="c1"># Current stress of material points</span>
             <span class="n">stress</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="p">:]</span>
             
@@ -1101,48 +1070,56 @@ where \)</span> N_i(x_p) $ is the shape function value at the particle position.
 </div>
 <p>After determining the derivatives of the shape functions with respect to global coordinates, the material point quantities (such as mass, momentum, and forces) are mapped to the corresponding nodal values using the shape functions <span class="math notranslate nohighlight">\( N_i (\xi, \eta) \)</span> and their derivatives.</p>
 <p>For each material point <span class="math notranslate nohighlight">\( p \)</span>, the following computations are performed:</p>
-<p><em><strong>Nodal Mass Update</strong></em><br />
-The mass of a node <span class="math notranslate nohighlight">\( I \)</span> is updated by summing the contributions from the material points:<br />
-$<span class="math notranslate nohighlight">\( m_I^t \mathrel{+}= N_i \cdot m_p \)</span>$
-where:</p>
+<p><em><strong>Nodal Mass Update</strong></em></p>
+<p>The mass of a node <span class="math notranslate nohighlight">\( I \)</span> is updated by summing the contributions from the material points:</p>
+<div class="math notranslate nohighlight">
+\[ m_I^t \mathrel{+}= N_i \cdot m_p \]</div>
+<p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( N_i \)</span> is the shape function value at the location of the material point, corresponding to node <span class="math notranslate nohighlight">\( i \)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\( m_p \)</span> is the mass of the material point.</p></li>
 </ul>
-<p><em><strong>Nodal Momentum Update</strong></em><br />
-The nodal momentum is updated by adding the momentum contribution of the material point:<br />
-$<span class="math notranslate nohighlight">\( (mv)_I^t \mathrel{+}= N_i \cdot m_p \cdot \mathbf{v}_p \)</span>$
-where:</p>
+<p><em><strong>Nodal Momentum Update</strong></em></p>
+<p>The nodal momentum is updated by adding the momentum contribution of the material point:</p>
+<div class="math notranslate nohighlight">
+\[ (mv)_I^t \mathrel{+}= N_i \cdot m_p \cdot \mathbf{v}_p \]</div>
+<p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( \mathbf{v}_p \)</span> is the velocity of the material point.</p></li>
 </ul>
-<p><em><strong>Internal Force Update</strong></em>
-The internal forces are computed using the Cauchy stress tensor <span class="math notranslate nohighlight">\( \sigma \)</span> and the derivatives of the shape functions with respect to global coordinates:<br />
-$<span class="math notranslate nohighlight">\( f_I^{int,t,x} \mathrel{-}= V_p \cdot \left( \sigma_{xx} \cdot \frac{\partial N_i}{\partial x} + \sigma_{xy} \cdot \frac{\partial N_i}{\partial y} \right) \)</span><span class="math notranslate nohighlight">\(
-   \)</span><span class="math notranslate nohighlight">\( f_I^{int,t,y} \mathrel{-}= V_p \cdot \left( \sigma_{xy} \cdot \frac{\partial N_i}{\partial x} + \sigma_{yy} \cdot \frac{\partial N_i}{\partial y} \right) \)</span>$
-where:</p>
+<p><em><strong>Internal Force Update</strong></em></p>
+<p>The internal forces are computed using the Cauchy stress tensor <span class="math notranslate nohighlight">\( \sigma \)</span> and the derivatives of the shape functions with respect to global coordinates:</p>
+<div class="math notranslate nohighlight">
+\[ f_I^{int,t,x} \mathrel{-}= V_p \cdot \left( \sigma_{xx} \cdot \frac{\partial N_i}{\partial x} + \sigma_{xy} \cdot \frac{\partial N_i}{\partial y} \right) \]</div>
+<div class="math notranslate nohighlight">
+\[ f_I^{int,t,y} \mathrel{-}= V_p \cdot \left( \sigma_{xy} \cdot \frac{\partial N_i}{\partial x} + \sigma_{yy} \cdot \frac{\partial N_i}{\partial y} \right) \]</div>
+<p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( V_p \)</span> is the volume of the material point.</p></li>
 <li><p><span class="math notranslate nohighlight">\( \sigma_{xx}, \sigma_{yy}, \sigma_{xy} \)</span> are components of the stress tensor at the material point.</p></li>
 </ul>
-<p><em><strong>External Force Update</strong></em>
-The external forces are computed using body forces such as gravity <span class="math notranslate nohighlight">\( \mathbf{g} \)</span>:<br />
-$<span class="math notranslate nohighlight">\( f_I^{ext,t,y} \mathrel{-}= N_i \cdot m_p \cdot g \)</span><span class="math notranslate nohighlight">\(
-   where \)</span> g $ is the gravitational acceleration.</p>
-<p><em><strong>Nodal Force Calculation</strong></em>
-The total force at each node is the sum of internal and external forces:<br />
-$<span class="math notranslate nohighlight">\( f_I^t = f_I^{int,t} + f_I^{ext,t} \)</span>$</p>
+<p><em><strong>External Force Update</strong></em></p>
+<p>The external forces are computed using body forces such as gravity <span class="math notranslate nohighlight">\( \mathbf{g} \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ f_I^{ext,t,y} \mathrel{-}= N_i \cdot m_p \cdot g \]</div>
+<p>where <span class="math notranslate nohighlight">\( g \)</span> is the gravitational acceleration.</p>
+<p><em><strong>Nodal Force Calculation</strong></em></p>
+<p>The total force at each node is the sum of internal and external forces:</p>
+<div class="math notranslate nohighlight">
+\[ f_I^t = f_I^{int,t} + f_I^{ext,t} \]</div>
 <p><em><strong>Matrix Notation for Forces</strong></em></p>
-<p>In matrix form, the internal force at a node <span class="math notranslate nohighlight">\( I \)</span> can be expressed as:<br />
-$<span class="math notranslate nohighlight">\( \mathbf{f}_I^{int,t} = -\mathbf{B}_I^T \cdot \boldsymbol{\sigma} \cdot V_p \)</span>$<br />
-where:</p>
+<p>In matrix form, the internal force at a node <span class="math notranslate nohighlight">\( I \)</span> can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{f}_I^{int,t} = -\mathbf{B}_I^T \cdot \boldsymbol{\sigma} \cdot V_p \]</div>
+<p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( \mathbf{B}_I \)</span> is the strain-displacement matrix derived from <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial x} \)</span> and <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial y} \)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\( \boldsymbol{\sigma} \)</span> is the stress tensor.</p></li>
 </ul>
-<p>For the external force:<br />
-$<span class="math notranslate nohighlight">\( \mathbf{f}_I^{ext,t} = \int_\Omega N_i \cdot \mathbf{b} \, d\Omega \)</span><span class="math notranslate nohighlight">\(  
-where \)</span> \mathbf{b} $ is the body force (e.g., gravity).</p>
+<p>For the external force:</p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{f}_I^{ext,t} = \int_\Omega N_i \cdot \mathbf{b} \, d\Omega \]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{b} \)</span> is the body force (e.g., gravity).</p>
 <p>By summing these contributions, the total nodal force <span class="math notranslate nohighlight">\( \mathbf{f}_I^t \)</span> is obtained.</p>
 </section>
 </section>
