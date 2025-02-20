@@ -4,17 +4,19 @@
 ## Strain measures
 
 ### Deformation gradient tensor
-The deformation gradient tensor, $\mathbf{F}$, is a crucial concept in finite deformation continuum mechanics, as it forms the basis for deriving all measures of deformation. It acts as a linear transformation operator that maps an infinitesimal line element, $d\mathbf{X}$, from the reference configuration to the corresponding infinitesimal line element, $d\mathbf{x}$, in the deformed configuration. Mathematically, it is expressed as:
+The deformation gradient tensor, $\mathbf{F}$, is a crucial concept in finite deformation (large deformation) continuum mechanics, as it forms the basis for deriving all measures of deformation. It provides a linear mapping between an initial configuration, $d\mathbf{X}$, to an deformed configuration, $d\mathbf{x}$, without assuming that displacements or rotations are small. It is expressed as:
 
 $$
-\mathbf{F} := \frac{\partial \boldsymbol{\varphi}}{\partial \mathbf{X}} = \frac{\partial \mathbf{x}}{\partial \mathbf{X}}, \quad \text{or in component form,} \quad F_{ij} = \frac{\partial x_i}{\partial X_j}.
+\mathbf{F} := \frac{\partial \boldsymbol{\phi}}{\partial \mathbf{X}} = \frac{\partial \mathbf{x}}{\partial \mathbf{X}}, \quad \text{or in component form,} \quad F_{ij} = \frac{\partial x_i}{\partial X_j}.
 $$
 
 ### Velocity gradient tensor
 
 The velocity gradient tensor, $\mathbf{L}$, quantifies the spatial rate of change of the velocity field, $\mathbf{v}$, within the material. It captures the local rate of stretching, shearing, and rotation. $\mathbf{L}$ is defined as the gradient of the velocity vector, and its components are given by:
 
-$$\mathbf{L} = \dot{\mathbf{F}}\mathbf{F}^{-1}$$
+$$
+\dot{\mathbf{F}} = \frac{\partial}{\partial t}\left(\frac{\partial \phi(\mathbf{X},t)}{\partial \mathbf{X}}\right) = \frac{\partial \mathbf{v}}{\partial \mathbf{X}} = \frac{\partial \mathbf{v}}{\partial \mathbf{x}} \cdot \frac{\partial \mathbf{x}}{\partial \mathbf{X}} = \mathbf{L} \cdot \mathbf{F}, \quad \Rightarrow \mathbf{L} = \dot{\mathbf{F}} \cdot \mathbf{F}^{-1}
+$$
 
 $$
 \bf{L}=\nabla v =\left[
@@ -49,7 +51,7 @@ $$
 
 
 ### Rate of deformation tensor (strain rate tensor)
-The rate of deformation tensor, $\mathbf{D}$, also known as the strain rate tensor, represents the symmetric part of the velocity gradient tensor, $\mathbf{L}$. It describes the rate of change of strain in the material, excluding any rotational effects. Mathematically, $\mathbf{D}$ is given by:
+The rate of deformation tensor, $\mathbf{D}$, also known as the strain rate tensor, represents the symmetric part of the velocity gradient tensor, $\mathbf{L}$. It describes the rate of change of strain in the material (rate of stretching and shearing). Mathematically, $\mathbf{D}$ is given by:
 
 $$
 \mathbf{D} = \frac{1}{2}(\mathbf{L} + \mathbf{L}^T) = 

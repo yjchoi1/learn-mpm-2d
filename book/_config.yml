@@ -34,3 +34,7 @@ html:
   baseurl: "/learn-mpm-2d"
   use_issues_button: true
   use_repository_button: true
+
+html:
+  sidebar:
+    collapse_navigation: false 

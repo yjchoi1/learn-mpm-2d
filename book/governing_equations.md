@@ -13,6 +13,7 @@ $$
 \dfrac{d \rho}{dt} + \rho \nabla \cdot \mathbf{v} = 0
 $$
 
+A one assumption of MPM is that each material point (MP) maintains a constant mass throughout the simulation, which inherently ensures mass conservation.
 
 The linear momentum balance equation is also called as the equation of motion and it is derived by applying the Newton's second law to a continuum body.  
 
