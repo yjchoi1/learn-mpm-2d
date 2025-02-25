@@ -146,7 +146,7 @@ After computing grid nodal quantities, the updated information is transferred ba
      - The change in velocity from the grid nodes ($v^{t+\Delta t}_I - v^t_I$), which is added to the previous particle velocity $v^t_p$, and
      - The newly computed grid velocity $v^{t+\Delta t}_I$.
      
-     The weighting factor $\alpha$ (between 0 and 1) controls the numerical damping and stability of the method. The use of the shape function $ \phi_I(x^t_p) $ ensures that the grid data is interpolated to the exact location of each particle.
+     The weighting factor $\alpha$ (between 0 and 1) is 0, the particle velocity update follows the *Particle in Cell (PIC)* way where the particle velocity is obtained using the total grid velocity. When $\alpha$ is 1, the particle velocity update follows the *Fluid Implicit Particle (FLIP)* way where the particle velocity is obtained using the grid velocity increment at the particle position. PIC method is more numerically stable, but less energy conservative than FLIP. When $\alpha$ is between 0 and 1, the particle velocity update is a blend of PIC and FLIP.
 
 3. **Update particle positions**
 
