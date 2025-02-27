@@ -1082,8 +1082,77 @@ J =
 \frac{\partial N_3}{\partial x} &amp; \frac{\partial N_3}{\partial y} \\
 \frac{\partial N_4}{\partial x} &amp; \frac{\partial N_4}{\partial y}
 \end{bmatrix}\end{split}\]</div>
-</section>
 <hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="c1"># Current stress of material points</span>
+            <span class="n">stress</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="p">:]</span>
+            
+            <span class="c1"># Iterate over the nodes of the current element &amp; update nodal values by interpolating material point values</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">node_ids</span><span class="p">):</span>
+                <span class="n">dNIdx</span> <span class="o">=</span> <span class="n">dNdx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">dNIdy</span> <span class="o">=</span> <span class="n">dNdx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">nodal_masses</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="o">+=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Mp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+                <span class="n">nodal_momentums</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Mp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">vp</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">nodal_iforces</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Vp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">stress</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdx</span> <span class="o">+</span> <span class="n">stress</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdy</span><span class="p">)</span>
+                <span class="n">nodal_iforces</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Vp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">stress</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdx</span> <span class="o">+</span> <span class="n">stress</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdy</span><span class="p">)</span>
+                <span class="n">nodal_eforces</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Mp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">g</span>
+
+    <span class="n">nforce</span> <span class="o">=</span> <span class="n">nodal_iforces</span> <span class="o">+</span> <span class="n">nodal_eforces</span>
+</pre></div>
+</div>
+<p>After determining the derivatives of the shape functions with respect to global coordinates, the material point quantities (such as mass, momentum, and forces) are mapped to the corresponding nodal values using the shape functions <span class="math notranslate nohighlight">\( N_i (\xi, \eta) \)</span> and their derivatives.</p>
+<p>For each material point <span class="math notranslate nohighlight">\( p \)</span>, the following computations are performed:</p>
+<p><em><strong>Nodal Mass Update</strong></em></p>
+<p>The mass of a node <span class="math notranslate nohighlight">\( I \)</span> is updated by summing the contributions from the material points:</p>
+<div class="math notranslate nohighlight">
+\[ m_I^t \mathrel{+}= N_i \cdot m_p \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( N_i \)</span> is the shape function value at the location of the material point, corresponding to node <span class="math notranslate nohighlight">\( i \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( m_p \)</span> is the mass of the material point.</p></li>
+</ul>
+<p><em><strong>Nodal Momentum Update</strong></em></p>
+<p>The nodal momentum is updated by adding the momentum contribution of the material point:</p>
+<div class="math notranslate nohighlight">
+\[ (mv)_I^t \mathrel{+}= N_i \cdot m_p \cdot \mathbf{v}_p \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mathbf{v}_p \)</span> is the velocity of the material point.</p></li>
+</ul>
+<p><em><strong>Internal Force Update</strong></em></p>
+<p>The internal forces are computed using the Cauchy stress tensor <span class="math notranslate nohighlight">\( \sigma \)</span> and the derivatives of the shape functions with respect to global coordinates:</p>
+<div class="math notranslate nohighlight">
+\[ f_I^{int,t,x} \mathrel{-}= V_p \cdot \left( \sigma_{xx} \cdot \frac{\partial N_i}{\partial x} + \sigma_{xy} \cdot \frac{\partial N_i}{\partial y} \right) \]</div>
+<div class="math notranslate nohighlight">
+\[ f_I^{int,t,y} \mathrel{-}= V_p \cdot \left( \sigma_{xy} \cdot \frac{\partial N_i}{\partial x} + \sigma_{yy} \cdot \frac{\partial N_i}{\partial y} \right) \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( V_p \)</span> is the volume of the material point.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \sigma_{xx}, \sigma_{yy}, \sigma_{xy} \)</span> are components of the stress tensor at the material point.</p></li>
+</ul>
+<p><em><strong>External Force Update</strong></em></p>
+<p>The external forces are computed using body forces such as gravity <span class="math notranslate nohighlight">\( \mathbf{g} \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ f_I^{ext,t,y} \mathrel{-}= N_i \cdot m_p \cdot g \]</div>
+<p>where <span class="math notranslate nohighlight">\( g \)</span> is the gravitational acceleration.</p>
+<p><em><strong>Nodal Force Calculation</strong></em></p>
+<p>The total force at each node is the sum of internal and external forces:</p>
+<div class="math notranslate nohighlight">
+\[ f_I^t = f_I^{int,t} + f_I^{ext,t} \]</div>
+<p><em><strong>Matrix Notation for Forces</strong></em></p>
+<p>In matrix form, the internal force at a node <span class="math notranslate nohighlight">\( I \)</span> can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{f}_I^{int,t} = -\mathbf{B}_I^T \cdot \boldsymbol{\sigma} \cdot V_p \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( \mathbf{B}_I \)</span> is the strain-displacement matrix derived from <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial x} \)</span> and <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial y} \)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\( \boldsymbol{\sigma} \)</span> is the stress tensor.</p></li>
+</ul>
+<p>For the external force:</p>
+<div class="math notranslate nohighlight">
+\[ \mathbf{f}_I^{ext,t} = \int_\Omega N_i \cdot \mathbf{b} \, d\Omega \]</div>
+<p>where <span class="math notranslate nohighlight">\( \mathbf{b} \)</span> is the body force (e.g., gravity).</p>
+<p>By summing these contributions, the total nodal force <span class="math notranslate nohighlight">\( \mathbf{f}_I^t \)</span> is obtained.</p>
+</section>
 <section id="update-the-momenta-and-impose-boundary-condition">
 <h4>Update the momenta and impose boundary condition<a class="headerlink" href="#update-the-momenta-and-impose-boundary-condition" title="Link to this heading">#</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># Impose boundary condition</span>
@@ -1272,75 +1341,6 @@ V_p^{t+\Delta t} = \text{det}(\mathbf{F}_p^{t+\Delta t}) \cdot V_p^0
 \mathbf{s}_I = \mathbf{s}_I + N_i(x_p) \cdot \boldsymbol{\sigma}_p
 \]</div>
 <p>where <span class="math notranslate nohighlight">\( N_i(x_p) \)</span> is the shape function value at the particle position.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="c1"># Current stress of material points</span>
-            <span class="n">stress</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="p">:]</span>
-            
-            <span class="c1"># Iterate over the nodes of the current element &amp; update nodal values by interpolating material point values</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">node_ids</span><span class="p">):</span>
-                <span class="n">dNIdx</span> <span class="o">=</span> <span class="n">dNdx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-                <span class="n">dNIdy</span> <span class="o">=</span> <span class="n">dNdx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-                <span class="n">nodal_masses</span><span class="p">[</span><span class="n">node_id</span><span class="p">]</span> <span class="o">+=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Mp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
-                <span class="n">nodal_momentums</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Mp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">vp</span><span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="p">:]</span>
-                <span class="n">nodal_iforces</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Vp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">stress</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdx</span> <span class="o">+</span> <span class="n">stress</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdy</span><span class="p">)</span>
-                <span class="n">nodal_iforces</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">Vp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">stress</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdx</span> <span class="o">+</span> <span class="n">stress</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dNIdy</span><span class="p">)</span>
-                <span class="n">nodal_eforces</span><span class="p">[</span><span class="n">node_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">Mp</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">g</span>
-
-    <span class="n">nforce</span> <span class="o">=</span> <span class="n">nodal_iforces</span> <span class="o">+</span> <span class="n">nodal_eforces</span>
-</pre></div>
-</div>
-<p>After determining the derivatives of the shape functions with respect to global coordinates, the material point quantities (such as mass, momentum, and forces) are mapped to the corresponding nodal values using the shape functions <span class="math notranslate nohighlight">\( N_i (\xi, \eta) \)</span> and their derivatives.</p>
-<p>For each material point <span class="math notranslate nohighlight">\( p \)</span>, the following computations are performed:</p>
-<p><em><strong>Nodal Mass Update</strong></em></p>
-<p>The mass of a node <span class="math notranslate nohighlight">\( I \)</span> is updated by summing the contributions from the material points:</p>
-<div class="math notranslate nohighlight">
-\[ m_I^t \mathrel{+}= N_i \cdot m_p \]</div>
-<p>where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\( N_i \)</span> is the shape function value at the location of the material point, corresponding to node <span class="math notranslate nohighlight">\( i \)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\( m_p \)</span> is the mass of the material point.</p></li>
-</ul>
-<p><em><strong>Nodal Momentum Update</strong></em></p>
-<p>The nodal momentum is updated by adding the momentum contribution of the material point:</p>
-<div class="math notranslate nohighlight">
-\[ (mv)_I^t \mathrel{+}= N_i \cdot m_p \cdot \mathbf{v}_p \]</div>
-<p>where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\( \mathbf{v}_p \)</span> is the velocity of the material point.</p></li>
-</ul>
-<p><em><strong>Internal Force Update</strong></em></p>
-<p>The internal forces are computed using the Cauchy stress tensor <span class="math notranslate nohighlight">\( \sigma \)</span> and the derivatives of the shape functions with respect to global coordinates:</p>
-<div class="math notranslate nohighlight">
-\[ f_I^{int,t,x} \mathrel{-}= V_p \cdot \left( \sigma_{xx} \cdot \frac{\partial N_i}{\partial x} + \sigma_{xy} \cdot \frac{\partial N_i}{\partial y} \right) \]</div>
-<div class="math notranslate nohighlight">
-\[ f_I^{int,t,y} \mathrel{-}= V_p \cdot \left( \sigma_{xy} \cdot \frac{\partial N_i}{\partial x} + \sigma_{yy} \cdot \frac{\partial N_i}{\partial y} \right) \]</div>
-<p>where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\( V_p \)</span> is the volume of the material point.</p></li>
-<li><p><span class="math notranslate nohighlight">\( \sigma_{xx}, \sigma_{yy}, \sigma_{xy} \)</span> are components of the stress tensor at the material point.</p></li>
-</ul>
-<p><em><strong>External Force Update</strong></em></p>
-<p>The external forces are computed using body forces such as gravity <span class="math notranslate nohighlight">\( \mathbf{g} \)</span>:</p>
-<div class="math notranslate nohighlight">
-\[ f_I^{ext,t,y} \mathrel{-}= N_i \cdot m_p \cdot g \]</div>
-<p>where <span class="math notranslate nohighlight">\( g \)</span> is the gravitational acceleration.</p>
-<p><em><strong>Nodal Force Calculation</strong></em></p>
-<p>The total force at each node is the sum of internal and external forces:</p>
-<div class="math notranslate nohighlight">
-\[ f_I^t = f_I^{int,t} + f_I^{ext,t} \]</div>
-<p><em><strong>Matrix Notation for Forces</strong></em></p>
-<p>In matrix form, the internal force at a node <span class="math notranslate nohighlight">\( I \)</span> can be expressed as:</p>
-<div class="math notranslate nohighlight">
-\[ \mathbf{f}_I^{int,t} = -\mathbf{B}_I^T \cdot \boldsymbol{\sigma} \cdot V_p \]</div>
-<p>where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\( \mathbf{B}_I \)</span> is the strain-displacement matrix derived from <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial x} \)</span> and <span class="math notranslate nohighlight">\( \frac{\partial N}{\partial y} \)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\( \boldsymbol{\sigma} \)</span> is the stress tensor.</p></li>
-</ul>
-<p>For the external force:</p>
-<div class="math notranslate nohighlight">
-\[ \mathbf{f}_I^{ext,t} = \int_\Omega N_i \cdot \mathbf{b} \, d\Omega \]</div>
-<p>where <span class="math notranslate nohighlight">\( \mathbf{b} \)</span> is the body force (e.g., gravity).</p>
-<p>By summing these contributions, the total nodal force <span class="math notranslate nohighlight">\( \mathbf{f}_I^t \)</span> is obtained.</p>
 </section>
 </section>
 <section id="advance-time">
