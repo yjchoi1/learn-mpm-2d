@@ -162,10 +162,10 @@ $$
  In other words, $\Delta t < \Delta t_{cr}$, where $\Delta t_{cr}$ denotes critical timestep evaluated as follows.
 
  $$
- \Delta t_{cr} = \frac{d}{c} = \frac{d}{E/\rho}
+ \Delta t_{cr} = \frac{d}{c} = \frac{d}{\sqrt{E/\rho}}
  $$
 
- Here, $E$ is the Young modulus and $\rho$ is the density of the linear elastic material. For non-linear problems, $\Delta t_{cr}$ is decreased by Courant number with $0 < C_{NB} < 1$, i.e., $\Delta t_{cr} := C_{NB} \Delta t_{cr}$.
+ Here, $E$ is the Young modulus, $d$ is the cell size, and $\rho$ is the density of the linear elastic material. For non-linear problems, $\Delta t_{cr}$ is decreased by Courant number with $0 < C_{NB} < 1$, i.e., $\Delta t_{cr} := C_{NB} \Delta t_{cr}$.
 
 In order to solve the fully discrete form and velocity update equation at the grid nodes,  mass and velocity carried by the material points must be transferred to the background grid. At the beginning of each Lagrangian time step,  particle mass is mapped to the nodes using
 

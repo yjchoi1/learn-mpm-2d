@@ -494,9 +494,9 @@ C = \dfrac{u \Delta t}{\Delta x} \leq C_{max}
 <p>In other words, <span class="math notranslate nohighlight">\(\Delta t &lt; \Delta t_{cr}\)</span>, where <span class="math notranslate nohighlight">\(\Delta t_{cr}\)</span> denotes critical timestep evaluated as follows.</p>
 <div class="math notranslate nohighlight">
 \[
- \Delta t_{cr} = \frac{d}{c} = \frac{d}{E/\rho}
+ \Delta t_{cr} = \frac{d}{c} = \frac{d}{\sqrt{E/\rho}}
  \]</div>
-<p>Here, <span class="math notranslate nohighlight">\(E\)</span> is the Young modulus and <span class="math notranslate nohighlight">\(\rho\)</span> is the density of the linear elastic material. For non-linear problems, <span class="math notranslate nohighlight">\(\Delta t_{cr}\)</span> is decreased by Courant number with <span class="math notranslate nohighlight">\(0 &lt; C_{NB} &lt; 1\)</span>, i.e., <span class="math notranslate nohighlight">\(\Delta t_{cr} := C_{NB} \Delta t_{cr}\)</span>.</p>
+<p>Here, <span class="math notranslate nohighlight">\(E\)</span> is the Young modulus, <span class="math notranslate nohighlight">\(d\)</span> is the cell size, and <span class="math notranslate nohighlight">\(\rho\)</span> is the density of the linear elastic material. For non-linear problems, <span class="math notranslate nohighlight">\(\Delta t_{cr}\)</span> is decreased by Courant number with <span class="math notranslate nohighlight">\(0 &lt; C_{NB} &lt; 1\)</span>, i.e., <span class="math notranslate nohighlight">\(\Delta t_{cr} := C_{NB} \Delta t_{cr}\)</span>.</p>
 <p>In order to solve the fully discrete form and velocity update equation at the grid nodes,  mass and velocity carried by the material points must be transferred to the background grid. At the beginning of each Lagrangian time step,  particle mass is mapped to the nodes using</p>
 <div class="math notranslate nohighlight">
 \[
